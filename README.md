@@ -36,7 +36,7 @@ lib/
 To run this app locally:
 
 ```bash
-git clone https://github.com/your-username/qr_code_scanner_flutter.git
+git clone https://github.com/AmrSalahDev/qr_code_scanner_flutter.git
 cd qr_code_scanner_flutter
 flutter pub get
 flutter run
@@ -46,7 +46,7 @@ flutter run
 
 ### 🛆 Dependencies
 
-* [`qr_code_scanner`](https://pub.dev/packages/qr_code_scanner)
+* [`qr_code_scanner_plus`](https://pub.dev/packages/qr_code_scanner_plus)
 * [`hive`](https://pub.dev/packages/hive)
 * [`flutter_bloc`](https://pub.dev/packages/flutter_bloc)
 * [`path_provider`](https://pub.dev/packages/path_provider)
