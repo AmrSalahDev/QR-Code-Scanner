@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qr_code_sacnner_app/presentation/screens/event/cubit/event_cubit.dart';
-import 'package:qr_code_sacnner_app/presentation/screens/event/event_screen.dart';
-import 'package:qr_code_sacnner_app/presentation/screens/generate/cubit/generate_cubit.dart';
-import 'package:qr_code_sacnner_app/presentation/screens/generate/generate_screen.dart';
-import 'package:qr_code_sacnner_app/presentation/screens/history/cubit/history_cubit.dart';
-import 'package:qr_code_sacnner_app/presentation/screens/history/history_screen.dart';
-import 'package:qr_code_sacnner_app/presentation/screens/home/home_screen.dart';
-import 'package:qr_code_sacnner_app/presentation/screens/scan/cubit/scan_cubit.dart';
-import 'package:qr_code_sacnner_app/presentation/screens/scan/scan_screen.dart';
-import 'package:qr_code_sacnner_app/presentation/screens/splash/splash_screen.dart';
+import 'package:qr_code_sacnner_app/features/presentation/screens/event/cubit/event_cubit.dart';
+import 'package:qr_code_sacnner_app/features/presentation/screens/event/event_screen.dart';
+import 'package:qr_code_sacnner_app/features/presentation/screens/generate/cubit/generate_cubit.dart';
+import 'package:qr_code_sacnner_app/features/presentation/screens/generate/generate_screen.dart';
+import 'package:qr_code_sacnner_app/features/presentation/screens/history/cubit/history_cubit.dart';
+import 'package:qr_code_sacnner_app/features/presentation/screens/history/history_screen.dart';
+import 'package:qr_code_sacnner_app/features/presentation/screens/home/home_screen.dart';
+import 'package:qr_code_sacnner_app/features/presentation/screens/scan/cubit/scan_cubit.dart';
+import 'package:qr_code_sacnner_app/features/presentation/screens/scan/scan_screen.dart';
+import 'package:qr_code_sacnner_app/features/presentation/screens/splash/splash_screen.dart';
 
 final GlobalKey<ScanScreenState> scanScreenKey = GlobalKey<ScanScreenState>();
 

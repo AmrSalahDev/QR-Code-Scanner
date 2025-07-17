@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
-import 'package:qr_code_sacnner_app/models/history_model.dart';
+import 'package:qr_code_sacnner_app/features/data/models/history_model.dart';
 part 'history_state.dart';
 
 class HistoryCubit extends Cubit<HistoryState> {

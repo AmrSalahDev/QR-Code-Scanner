@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
-import 'package:qr_code_sacnner_app/presentation/screens/scan/cubit/scan_cubit.dart';
+import 'package:qr_code_sacnner_app/features/presentation/screens/scan/cubit/scan_cubit.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 import 'package:vibration/vibration.dart';
 

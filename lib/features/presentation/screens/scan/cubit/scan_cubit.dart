@@ -5,7 +5,7 @@ import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qr_code_sacnner_app/core/utils/barcode_utils.dart';
-import 'package:qr_code_sacnner_app/models/history_model.dart';
+import 'package:qr_code_sacnner_app/features/data/models/history_model.dart';
 import 'package:uuid/uuid.dart';
 
 part 'scan_state.dart';

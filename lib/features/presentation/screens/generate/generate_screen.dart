@@ -4,9 +4,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
-import 'package:qr_code_sacnner_app/models/generate_model.dart';
-import 'package:qr_code_sacnner_app/presentation/screens/generate/cubit/generate_cubit.dart';
-import 'package:qr_code_sacnner_app/presentation/widgets/border_with_label.dart';
+import 'package:qr_code_sacnner_app/features/data/models/generate_model.dart';
+import 'package:qr_code_sacnner_app/features/presentation/screens/generate/cubit/generate_cubit.dart';
+import 'package:qr_code_sacnner_app/features/presentation/widgets/border_with_label.dart';
 
 // ignore: must_be_immutable
 class GenerateScreen extends StatelessWidget {

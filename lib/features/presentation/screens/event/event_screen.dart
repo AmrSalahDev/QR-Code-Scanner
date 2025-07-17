@@ -7,9 +7,9 @@ import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/utils/app_utils.dart';
 import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
-import 'package:qr_code_sacnner_app/presentation/screens/event/cubit/event_cubit.dart';
-import 'package:qr_code_sacnner_app/presentation/widgets/common_button.dart';
-import 'package:qr_code_sacnner_app/presentation/widgets/custom_text_field.dart';
+import 'package:qr_code_sacnner_app/features/presentation/screens/event/cubit/event_cubit.dart';
+import 'package:qr_code_sacnner_app/features/presentation/widgets/common_button.dart';
+import 'package:qr_code_sacnner_app/features/presentation/widgets/custom_text_field.dart';
 
 class EventScreen extends StatelessWidget {
   EventScreen({super.key});
