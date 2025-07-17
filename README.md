@@ -44,6 +44,16 @@ flutter run
 
 ---
 
+## ✨ Badges
+
+![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)
+![Platform](https://img.shields.io/badge/Platform-Android-blue.svg?style=for-the-badge)
+![State Management: Bloc](https://img.shields.io/badge/State%20Management-Bloc-purple.svg?style=for-the-badge)
+
+---
+
 ## 📦 Dependencies Used
 
 Below is a list of packages used in this Flutter project along with their versions:
