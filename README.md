@@ -91,10 +91,6 @@ Below is a list of packages used in this Flutter project along with their versio
 - `intl: ^0.20.2` – Internationalization and formatting
 - `share_plus: ^11.0.0` – Share content with other apps
 
----
-
-> Make sure to run `flutter pub get` after modifying your `pubspec.yaml`.
-
 
 ---
 
