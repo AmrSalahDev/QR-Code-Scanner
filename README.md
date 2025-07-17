@@ -101,6 +101,10 @@ Below is a list of packages used in this Flutter project along with their versio
 - `intl: ^0.20.2` – Internationalization and formatting
 - `share_plus: ^11.0.0` – Share content with other apps
 
+## 🎨 Figma Design
+
+[View Figma Design](https://www.figma.com/community/file/1214837612730924876)
+
 
 ---
 
