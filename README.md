@@ -1,3 +1,13 @@
+## ✨ Badges
+
+![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)
+![Platform](https://img.shields.io/badge/Platform-Android-blue.svg?style=for-the-badge)
+![State Management: Bloc](https://img.shields.io/badge/State%20Management-Bloc-purple.svg?style=for-the-badge)
+
+---
+
 ## 📱 QR Code Scanner App (Flutter)
 
 A powerful and easy-to-use **QR Code Scanner** app built with **Flutter**, featuring modern UI and essential functionality. This app allows users to scan QR codes instantly, view scan history, and generate new QR codes with custom data.
@@ -41,16 +51,6 @@ cd qr_code_scanner_flutter
 flutter pub get
 flutter run
 ```
-
----
-
-## ✨ Badges
-
-![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=flutter&logoColor=white)
-![Dart](https://img.shields.io/badge/Dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
-![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)
-![Platform](https://img.shields.io/badge/Platform-Android-blue.svg?style=for-the-badge)
-![State Management: Bloc](https://img.shields.io/badge/State%20Management-Bloc-purple.svg?style=for-the-badge)
 
 ---
 
