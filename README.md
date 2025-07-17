@@ -108,6 +108,8 @@ Below is a list of packages used in this Flutter project along with their versio
 
 > Add screenshots here (Scan page, History page, Generate page)
 
+![Scan Page](screenshots/qr_code_screens.png)
+
 ---
 
 ### 🛠️ Contributions
