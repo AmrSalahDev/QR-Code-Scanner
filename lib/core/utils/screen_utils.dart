@@ -10,4 +10,10 @@ class ScreenUtils {
 
   static bool isDesktop(BuildContext context) =>
       MediaQuery.of(context).size.width >= 1024;
+
+  static bool isLandscape(BuildContext context) =>
+      MediaQuery.of(context).orientation == Orientation.landscape;
+
+  static bool isPortrait(BuildContext context) =>
+      MediaQuery.of(context).orientation == Orientation.portrait;
 }
