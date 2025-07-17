@@ -102,7 +102,13 @@ Below is a list of packages used in this Flutter project along with their versio
 - `share_plus: ^11.0.0` – Share content with other apps
 
 ### 🎨 Figma Design
+
+Here’s the app UI design created in Figma:
+
 [![Figma Design](screenshots/figma-thumbnail.png)](https://www.figma.com/community/file/1214837612730924876)
+
+📌 Click the image to view the live Figma prototype.
+
 
 
 ---
@@ -110,6 +116,14 @@ Below is a list of packages used in this Flutter project along with their versio
 ### 📸 Screenshots
 
 > Add screenshots here (Scan page, History page, Generate page)
+
+<p float="left">
+  <img src="screenshots/scan_screen.png" width="45%"/>
+  <img src="screenshots/generate_screen.png" width="45%"/>
+  <img src="screenshots/history_screen.png" width="45%"/>
+  <img src="screenshots/settings_screen.png" width="45%"/>
+</p>
+
 
 ---
 
