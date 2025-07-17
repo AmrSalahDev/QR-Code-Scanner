@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'history_model.g.dart';
 
-@HiveType(typeId: 0) // Give each model a unique typeId
+@HiveType(typeId: 54)
 class HistoryModel extends HiveObject {
   @HiveField(0)
   final String id;

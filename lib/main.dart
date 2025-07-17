@@ -13,6 +13,7 @@ void main() async {
   Hive.init(appDir.path);
 
   Hive.registerAdapter(HistoryModelAdapter());
+
   await Hive.openBox<HistoryModel>('historyBox');
 
   runApp(const MyApp());
