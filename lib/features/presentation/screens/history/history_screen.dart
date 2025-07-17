@@ -8,6 +8,7 @@ import 'package:qr_code_sacnner_app/core/utils/app_utils.dart';
 import 'package:qr_code_sacnner_app/core/utils/barcode_utils.dart';
 import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
 import 'package:qr_code_sacnner_app/features/data/models/history_model.dart';
+import 'package:qr_code_sacnner_app/features/presentation/screens/generate/cubit/generate_cubit.dart';
 import 'package:qr_code_sacnner_app/features/presentation/screens/generate/generate_screen.dart';
 import 'package:qr_code_sacnner_app/features/presentation/screens/history/cubit/history_cubit.dart';
 
@@ -177,7 +178,10 @@ class HistoryScreen extends StatelessWidget {
                 ),
               ],
             ),
-            GenerateScreen(isShowAppBar: false),
+            BlocProvider(
+              create: (context) => GenerateCubit(),
+              child: GenerateScreen(isShowAppBar: false),
+            ),
           ],
         ),
       ),
