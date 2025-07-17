@@ -115,8 +115,6 @@ Here’s the app UI design created in Figma:
 
 ### 📸 Screenshots
 
-> Add screenshots here (Scan page, History page, Generate page)
-
 <p float="left">
   <img src="screenshots/scan_screen.png" width="45%"/>
   <img src="screenshots/generate_screen.png" width="45%"/>
