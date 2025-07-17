@@ -56,22 +56,22 @@ class GenerateCubit extends Cubit<GenerateState> {
           onTap: (value) => generateQRCode(AppStrings.instagram, value),
         );
         break;
-      case 'Twitter':
+      case AppStrings.twitter:
         CustomDialogs.showSimpleDialog(
           context: context,
-          labelText: 'Enter Username',
+          labelText: AppStrings.enterUsername,
           svgPath: AppIcons.twitter,
-          btnLabel: 'Generate QR Code',
-          onTap: (value) => generateQRCode('Twitter', value),
+          btnLabel: AppStrings.generateQrCode,
+          onTap: (value) => generateQRCode(AppStrings.twitter, value),
         );
         break;
-      case 'Phone':
+      case AppStrings.phone:
         CustomDialogs.showSimpleDialog(
           context: context,
-          labelText: 'Enter Phone Number',
+          labelText: AppStrings.enterPhoneNumber,
           icon: Icons.phone,
-          btnLabel: 'Generate QR Code',
-          onTap: (value) => generateQRCode('Phone', value),
+          btnLabel: AppStrings.generateQrCode,
+          onTap: (value) => generateQRCode(AppStrings.phone, value),
         );
         break;
     }

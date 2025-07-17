@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
+import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
+import 'package:qr_code_sacnner_app/core/routes/app_router.dart';
 import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
 import 'package:qr_code_sacnner_app/features/data/models/generate_model.dart';
 import 'package:qr_code_sacnner_app/features/presentation/screens/generate/cubit/generate_cubit.dart';
@@ -52,8 +54,8 @@ class GenerateQRGridView extends StatelessWidget {
         final String label = generateList[index].label;
         return GestureDetector(
           onTap: () {
-            if (label == 'Event') {
-              GoRouter.of(context).push('/event');
+            if (label == AppStrings.event) {
+              GoRouter.of(context).push(AppRouter.event);
               return;
             } else {
               BlocProvider.of<GenerateCubit>(
@@ -79,7 +81,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: isShowAppBar ? 80 : 0,
       actionsPadding: EdgeInsets.only(right: 16),
       backgroundColor: AppColor.primaryColor,
-      title: Text('Generate QR', style: TextStyle(color: AppColor.textColor)),
+      title: Text(
+        AppStrings.generateQr,
+        style: TextStyle(color: AppColor.textColor),
+      ),
       actions: [
         Container(
           decoration: BoxDecoration(

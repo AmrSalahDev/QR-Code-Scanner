@@ -2,11 +2,12 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
+import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/routes/app_router.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeShell extends StatelessWidget {
   final Widget child;
-  const HomeScreen({super.key, required this.child});
+  const HomeShell({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -21,28 +22,28 @@ class HomeScreen extends StatelessWidget {
         height: 55,
         style: TabStyle.fixedCircle,
         activeColor: AppColor.secondaryColor,
-        initialActiveIndex: currentRoute == '/generate'
+        initialActiveIndex: currentRoute == AppRouter.generate
             ? 0
-            : currentRoute == '/scan'
+            : currentRoute == AppRouter.scan
             ? 1
             : 0,
         backgroundColor: AppColor.primaryColor,
         items: const [
-          TabItem(icon: Icons.qr_code, title: 'Generate'),
-          TabItem(icon: Icons.qr_code_scanner, title: 'Scan'),
-          TabItem(icon: Icons.history, title: 'History'),
+          TabItem(icon: Icons.qr_code, title: AppStrings.generate),
+          TabItem(icon: Icons.qr_code_scanner, title: AppStrings.scan),
+          TabItem(icon: Icons.history, title: AppStrings.history),
         ],
         onTap: (int i) {
           if (i == 0) {
-            context.go('/generate');
+            context.go(AppRouter.generate);
           } else if (i == 1) {
-            if (currentRoute != '/scan') {
-              context.go('/scan');
+            if (currentRoute != AppRouter.scan) {
+              context.go(AppRouter.scan);
             } else {
               scanScreenKey.currentState?.startScan();
             }
           } else if (i == 2) {
-            context.go('/history');
+            context.go(AppRouter.history);
           }
         },
       ),

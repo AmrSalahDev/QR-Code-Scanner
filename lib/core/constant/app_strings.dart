@@ -47,4 +47,22 @@ class AppStrings {
   static const String enterPhoneNumber = 'Enter phone number';
   static const String enterEmail = 'Enter email';
   static const String enterUsername = 'Enter Username';
+  static const String errorDeletingHistory = 'Error Deleting History';
+  static const String errorLoadingHistory = 'Error Loading History';
+  static const String noHistoryFound = 'No History Found';
+  static const String create = 'Create';
+  static const String failedDeleteHistory = 'Failed to delete history';
+  static const String generateQr = 'Generate QR';
+  static const String qRCodeScanned = 'QR Code Scanned';
+  static const String qRCodeSuccessfullyScanned =
+      'The QR code has been successfully scanned.';
+  static const String view = 'View';
+  static const String oops = 'Oops!';
+  static const String qRCodeNotDetected = 'QR Code not detected';
+  static const String pointCameraQRCode =
+      'Please point the camera at a QR code.';
+  static const String retry = 'Retry';
+  static const String noQRFoundInImage = 'No QR code found in the image.';
+  static const String failedToScanQRCodeFromImage =
+      'Failed to scan QR code from image.';
 }

@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:qr_code_sacnner_app/core/constant/app_constant.dart';
+import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/utils/barcode_utils.dart';
 import 'package:qr_code_sacnner_app/features/data/models/history_model.dart';
 import 'package:uuid/uuid.dart';
@@ -14,7 +16,7 @@ class ScanCubit extends Cubit<ScanState> {
   ScanCubit() : super(ScanInitial());
 
   void addToHistory(String scannedData) {
-    final box = Hive.box<HistoryModel>('historyBox');
+    final box = Hive.box<HistoryModel>(AppConstant.hiveBoxHistory);
 
     final historyItem = HistoryModel(
       id: const Uuid().v4(),
@@ -48,14 +50,14 @@ class ScanCubit extends Cubit<ScanState> {
       barcodeScanner.close();
 
       if (barcodes.isEmpty || barcodes.first.rawValue == null) {
-        emit(ScanFailure('No QR code found in the image.'));
+        emit(ScanFailure(AppStrings.noQRFoundInImage));
       } else {
         final code = barcodes.first.rawValue!;
         addToHistory(code);
         emit(ScanImageSuccess(code));
       }
     } catch (e) {
-      emit(ScanFailure("Failed to scan QR code from image"));
+      emit(ScanFailure(AppStrings.failedToScanQRCodeFromImage));
     }
   }
 }

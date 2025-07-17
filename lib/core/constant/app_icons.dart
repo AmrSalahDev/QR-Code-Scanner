@@ -4,4 +4,5 @@ class AppIcons {
   static const String instagram = 'assets/images/Instagram.svg';
   static const String twitter = 'assets/images/twitter.svg';
   static const String whatsapp = 'assets/images/whatsapp.svg';
+  static const String qrCodeLogo = 'assets/images/qr_code_logo.svg';
 }

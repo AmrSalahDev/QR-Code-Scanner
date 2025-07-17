@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
+import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
+import 'package:qr_code_sacnner_app/core/routes/app_router.dart';
 import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
 import 'package:qr_code_sacnner_app/features/presentation/screens/scan/cubit/scan_cubit.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
@@ -49,19 +51,19 @@ class ScanScreenState extends State<ScanScreen> {
         } else if (state is ScanImageSuccess) {
           CustomDialogs.showSuccessDialog(
             context: context,
-            title: "QR Code detected",
-            desc: "The QR code has been successfully scanned.",
-            btnLabel: "View",
-            onTap: () => context.go('/history'),
+            title: AppStrings.qRCodeScanned,
+            desc: AppStrings.qRCodeSuccessfullyScanned,
+            btnLabel: AppStrings.view,
+            onTap: () => context.go(AppRouter.history),
           );
         } else if (state is ScanFailure) {
           AwesomeDialog(
             context: context,
             dialogType: DialogType.warning,
             animType: AnimType.rightSlide,
-            title: 'Oops!',
+            title: AppStrings.oops,
             desc: state.error,
-            btnOkText: 'Try Again',
+            btnOkText: AppStrings.tryAgain,
             btnOkColor: AppColor.secondaryColor,
             btnOkOnPress: () {
               BlocProvider.of<ScanCubit>(context).scanQRCodeFromImage();
@@ -136,10 +138,10 @@ class ScanScreenState extends State<ScanScreen> {
       BlocProvider.of<ScanCubit>(context).addToHistory(result!.code!);
       CustomDialogs.showSuccessDialog(
         context: context,
-        title: "QR Code scanned",
-        desc: "The QR code has been successfully scanned.",
-        btnLabel: "View",
-        onTap: () => context.go('/history'),
+        title: AppStrings.qRCodeScanned,
+        desc: AppStrings.qRCodeSuccessfullyScanned,
+        btnLabel: AppStrings.view,
+        onTap: () => context.go(AppRouter.history),
         onDismissCallback: (type) async {
           await controller!.resumeCamera();
         },
@@ -158,9 +160,9 @@ class ScanScreenState extends State<ScanScreen> {
       context: context,
       dialogType: DialogType.warning,
       animType: AnimType.rightSlide,
-      title: 'QR Code not detected',
-      desc: 'Please point the camera at a QR code.',
-      btnOkText: 'Retry',
+      title: AppStrings.qRCodeNotDetected,
+      desc: AppStrings.pointCameraQRCode,
+      btnOkText: AppStrings.retry,
       btnOkColor: AppColor.secondaryColor,
       btnOkOnPress: () {
         _isDialogShowing = false;

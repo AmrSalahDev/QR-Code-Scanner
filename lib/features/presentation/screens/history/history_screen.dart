@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_icons.dart';
+import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/utils/app_utils.dart';
 import 'package:qr_code_sacnner_app/core/utils/barcode_utils.dart';
 import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
@@ -36,9 +37,9 @@ class HistoryScreen extends StatelessWidget {
                       if (state is HistoryDeleteFailure) {
                         CustomDialogs.showErrorDialog(
                           context: context,
-                          title: "Error",
+                          title: AppStrings.errorDeletingHistory,
                           desc: state.message,
-                          btnLabel: "Try Again",
+                          btnLabel: AppStrings.tryAgain,
                           onTap: () {
                             BlocProvider.of<HistoryCubit>(
                               context,
@@ -48,9 +49,9 @@ class HistoryScreen extends StatelessWidget {
                       } else if (state is HistoryFailure) {
                         CustomDialogs.showErrorDialog(
                           context: context,
-                          title: "Error Loading History",
+                          title: AppStrings.errorLoadingHistory,
                           desc: state.message,
-                          btnLabel: "Try Again",
+                          btnLabel: AppStrings.tryAgain,
                           onTap: () {
                             BlocProvider.of<HistoryCubit>(
                               context,
@@ -77,7 +78,7 @@ class HistoryScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  'No History Found',
+                                  AppStrings.noHistoryFound,
                                   style: TextStyle(
                                     fontSize: 20,
                                     color: AppColor.secondaryColor,
@@ -201,7 +202,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: 80,
       actionsPadding: EdgeInsets.only(right: 16),
       backgroundColor: AppColor.primaryColor,
-      title: const Text('History', style: TextStyle(color: Colors.white)),
+      title: const Text(
+        AppStrings.history,
+        style: TextStyle(color: Colors.white),
+      ),
       actions: [
         Container(
           decoration: BoxDecoration(
@@ -250,8 +254,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             unselectedLabelColor: Colors.white,
             labelStyle: TextStyle(fontWeight: FontWeight.bold),
             tabs: [
-              Tab(text: 'Sacn'),
-              Tab(text: 'Create'),
+              Tab(text: AppStrings.scan),
+              Tab(text: AppStrings.create),
             ],
           ),
         ),
