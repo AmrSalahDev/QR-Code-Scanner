@@ -7,3 +7,8 @@ extension MediaQueryValues on BuildContext {
   double get topPadding => MediaQuery.of(this).padding.top;
   double get bottomPadding => MediaQuery.of(this).padding.bottom;
 }
+
+extension ThemeContext on BuildContext {
+  ThemeData get theme => Theme.of(this);
+  TextTheme get textTheme => Theme.of(this).textTheme;
+}
