@@ -6,6 +6,7 @@ extension MediaQueryValues on BuildContext {
   double get screenHeight => screenSize.height;
   double get topPadding => MediaQuery.of(this).padding.top;
   double get bottomPadding => MediaQuery.of(this).padding.bottom;
+  TextScaler get textScaler => MediaQuery.textScalerOf(this);
 }
 
 extension ThemeContext on BuildContext {

@@ -26,6 +26,10 @@ class AppStrings {
   static const String instagram = 'Instagram';
   static const String twitter = 'Twitter';
   static const String phone = 'Phone';
+  static const String wifi = 'WI-FI';
+  static const String business = 'Business';
+  static const String contact = 'Contact';
+  static const String location = 'Location';
   static const String eventStartDate = 'Start Date and Time';
   static const String eventEndDate = 'End Date and Time';
   static const String eventName = 'Event Name';

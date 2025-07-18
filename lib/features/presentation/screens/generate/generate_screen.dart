@@ -4,8 +4,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
+import 'package:qr_code_sacnner_app/core/extensions/context_extensions.dart';
 import 'package:qr_code_sacnner_app/core/routes/app_router.dart';
 import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
+import 'package:qr_code_sacnner_app/core/utils/screen_utils.dart';
 import 'package:qr_code_sacnner_app/features/data/models/generate_model.dart';
 import 'package:qr_code_sacnner_app/features/presentation/screens/generate/cubit/generate_cubit.dart';
 import 'package:qr_code_sacnner_app/features/presentation/widgets/border_with_label.dart';
@@ -25,11 +27,16 @@ class GenerateScreen extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: AppColor.primaryColor,
-        appBar: CustomAppBar(isShowAppBar: isShowAppBar),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(20),
-            child: Column(children: [Expanded(child: GenerateQRGridView())]),
+            child: Column(
+              children: [
+                CustomAppBar(isShowAppBar: isShowAppBar),
+                SizedBox(height: context.screenHeight * 0.05),
+                Expanded(child: GenerateQRGridView()),
+              ],
+            ),
           ),
         ),
       ),
@@ -42,13 +49,17 @@ class GenerateQRGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isLandscape = ScreenUtils.isLandscape(context);
+
     return GridView.builder(
       padding: const EdgeInsets.only(top: 16),
       itemCount: generateList.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 30,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: isLandscape ? 4 : 3,
+        crossAxisSpacing: context.screenWidth * 0.04,
+        mainAxisSpacing: isLandscape
+            ? context.screenWidth * 0.05
+            : context.screenWidth * 0.08,
       ),
       itemBuilder: (context, index) {
         final String label = generateList[index].label;
@@ -70,47 +81,47 @@ class GenerateQRGridView extends StatelessWidget {
   }
 }
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key, required this.isShowAppBar});
 
   final bool isShowAppBar;
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      toolbarHeight: isShowAppBar ? 80 : 0,
-      actionsPadding: EdgeInsets.only(right: 16),
-      backgroundColor: AppColor.primaryColor,
-      title: Text(
-        AppStrings.generateQr,
-        style: TextStyle(color: AppColor.textColor),
-      ),
-      actions: [
-        Container(
-          decoration: BoxDecoration(
-            color: AppColor.primaryColor,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 10,
-                offset: Offset(0, 2),
+    return isShowAppBar
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                AppStrings.generateQr,
+                style: TextStyle(
+                  color: AppColor.textColor,
+                  fontSize: context.textTheme.headlineSmall!.fontSize,
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColor.primaryColor,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.menu, color: AppColor.secondaryColor),
+                  onPressed: () {
+                    // Add your delete action here
+                  },
+                ),
               ),
             ],
-          ),
-          child: IconButton(
-            icon: Icon(Icons.menu, color: AppColor.secondaryColor),
-            onPressed: () {
-              // Add your delete action here
-            },
-          ),
-        ),
-      ],
-    );
+          )
+        : Container();
   }
-
-  @override
-  Size get preferredSize => Size.fromHeight(isShowAppBar ? 80 : 0);
 }
 
 class GenerateQRItem extends StatelessWidget {
@@ -119,29 +130,30 @@ class GenerateQRItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BorderWithLabel(
-      label: generateList[index].label,
-      labelColor: Colors.black,
-      borderColor: AppColor.secondaryColor,
-      labelSize: 12,
-      width: 95,
-      height: 85,
-      child: generateList[index].svgPath != null
-          ? Padding(
-              padding: const EdgeInsets.all(25),
-              child: SvgPicture.asset(
-                generateList[index].svgPath!,
-                colorFilter: ColorFilter.mode(
-                  AppColor.secondaryColor,
-                  BlendMode.srcIn,
-                ),
-              ),
-            )
-          : Icon(
-              generateList[index].icon,
-              color: AppColor.secondaryColor,
-              size: 35,
+    return LayoutBuilder(
+      builder: (context, constraints) => BorderWithLabel(
+        label: generateList[index].label,
+        labelColor: Colors.black,
+        borderColor: AppColor.secondaryColor,
+        labelSize: context.textScaler.scale(
+          context.textTheme.bodySmall!.fontSize!,
+        ),
+        width: constraints.maxWidth,
+        height: constraints.maxHeight,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: constraints.maxWidth * 0.3,
+            vertical: constraints.maxHeight * 0.3,
+          ),
+          child: SvgPicture.asset(
+            generateList[index].svgPath!,
+            colorFilter: ColorFilter.mode(
+              AppColor.secondaryColor,
+              BlendMode.srcIn,
             ),
+          ),
+        ),
+      ),
     );
   }
 }
