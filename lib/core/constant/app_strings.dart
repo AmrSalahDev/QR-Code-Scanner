@@ -69,4 +69,13 @@ class AppStrings {
   static const String noQRFoundInImage = 'No QR code found in the image.';
   static const String failedToScanQRCodeFromImage =
       'Failed to scan QR code from image.';
+  static const String networkName = 'Network Name';
+  static const String password = 'Password';
+  static const String type = 'Type';
+  static const String wifiHint = 'Enter network name';
+  static const String passwordHint = 'Enter password';
+  static const String typeHint = 'Enter type';
+  static const String wifiNameCannotBeEmpty = 'Wifi name cannot be empty';
+  static const String passwordCannotBeEmpty = 'Password cannot be empty';
+  static const String typeCannotBeEmpty = 'Type cannot be empty';
 }

@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,8 +9,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_icons.dart';
+import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/utils/app_utils.dart';
-import 'package:qr_code_sacnner_app/features/presentation/widgets/border_with_label.dart';
+import 'package:qr_code_sacnner_app/features/presentation/widgets/common_button.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class CustomDialogs {
@@ -45,14 +49,16 @@ class CustomDialogs {
     required String desc,
     required String btnLabel,
     required VoidCallback onTap,
+    double? width,
     Function(DismissType)? onDismissCallback,
   }) {
     AwesomeDialog(
       context: context,
       customHeader: Icon(Icons.info, color: AppColor.secondaryColor, size: 110),
-      dialogType: DialogType.success,
+      dialogType: DialogType.noHeader,
       animType: AnimType.scale,
       title: title,
+      width: width,
       desc: desc,
       btnOkText: btnLabel,
       btnOkColor: AppColor.secondaryColor,
@@ -256,6 +262,130 @@ class CustomDialogs {
         ),
       ),
       onDismissCallback: onDismissCallback,
+    ).show();
+  }
+
+  static void showCreateWifiDialog({
+    required BuildContext context,
+    required Function(Map<String, String> wifi) onTap,
+  }) {
+    final wifiNameController = TextEditingController();
+    final wifiPasswordController = TextEditingController();
+    AwesomeDialog(
+      context: context,
+      dialogBackgroundColor: AppColor.primaryColor,
+      customHeader: SvgPicture.asset(
+        height: 100,
+        width: 100,
+        AppIcons.wifi_signal,
+        colorFilter: ColorFilter.mode(AppColor.secondaryColor, BlendMode.srcIn),
+      ),
+      dialogType: DialogType.warning,
+      animType: AnimType.scale,
+      body: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 20),
+            Text(
+              AppStrings.networkName,
+              style: TextStyle(color: AppColor.textColor),
+            ),
+            SizedBox(height: 10),
+            TextField(
+              controller: wifiNameController,
+              cursorColor: AppColor.secondaryColor,
+              style: TextStyle(color: AppColor.secondaryColor),
+              decoration: InputDecoration(
+                hintText: AppStrings.wifiHint,
+                hintStyle: TextStyle(color: AppColor.hintColor),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(color: AppColor.secondaryColor),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(color: AppColor.secondaryColor),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(color: AppColor.secondaryColor),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              AppStrings.password,
+              style: TextStyle(color: AppColor.textColor),
+            ),
+            SizedBox(height: 10),
+            TextField(
+              controller: wifiPasswordController,
+              cursorColor: AppColor.secondaryColor,
+              style: TextStyle(color: AppColor.secondaryColor),
+              decoration: InputDecoration(
+                hintText: AppStrings.passwordHint,
+                hintStyle: TextStyle(color: AppColor.hintColor),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(color: AppColor.secondaryColor),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(color: AppColor.secondaryColor),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(color: AppColor.secondaryColor),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Align(
+              alignment: Alignment.center,
+              child: CommonButton(
+                btnLabel: AppStrings.generateQrCode,
+                onTap: () {
+                  if (wifiNameController.text.isEmpty) {
+                    showToast(
+                      AppStrings.wifiNameCannotBeEmpty,
+                      context: context,
+                      animation: StyledToastAnimation.scale,
+                      reverseAnimation: StyledToastAnimation.fade,
+                      position: StyledToastPosition.bottom,
+                      animDuration: Duration(seconds: 1),
+                      duration: Duration(seconds: 4),
+                      curve: Curves.elasticOut,
+                      reverseCurve: Curves.linear,
+                      backgroundColor: AppColor.secondaryColor,
+                    );
+                    return;
+                  } else if (wifiPasswordController.text.isEmpty) {
+                    showToast(
+                      AppStrings.passwordCannotBeEmpty,
+                      context: context,
+                      animation: StyledToastAnimation.scale,
+                      reverseAnimation: StyledToastAnimation.fade,
+                      position: StyledToastPosition.bottom,
+                      animDuration: Duration(seconds: 1),
+                      duration: Duration(seconds: 4),
+                      curve: Curves.elasticOut,
+                      reverseCurve: Curves.linear,
+                      backgroundColor: AppColor.secondaryColor,
+                    );
+                    return;
+                  }
+                  onTap({
+                    "ssid": wifiNameController.text,
+                    "password": wifiPasswordController.text,
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     ).show();
   }
 

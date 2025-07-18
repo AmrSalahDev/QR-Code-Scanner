@@ -74,6 +74,17 @@ class GenerateCubit extends Cubit<GenerateState> {
           onTap: (value) => generateQRCode(AppStrings.phone, value),
         );
         break;
+      case AppStrings.wifi:
+        CustomDialogs.showCreateWifiDialog(
+          context: context,
+          onTap: (value) {
+            String qrData =
+                'WIFI:T:WPA;S:${value['ssid']};P:${value['password']};""';
+            print(qrData);
+            generateQRCode(AppStrings.wifi, qrData);
+          },
+        );
+        break;
     }
   }
 
@@ -103,6 +114,9 @@ class GenerateCubit extends Cubit<GenerateState> {
         qrData = 'tel:$input';
         break;
       case 'Event':
+        qrData = input;
+        break;
+      case AppStrings.wifi:
         qrData = input;
         break;
       default:

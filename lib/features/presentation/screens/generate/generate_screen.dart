@@ -29,11 +29,13 @@ class GenerateScreen extends StatelessWidget {
         backgroundColor: AppColor.primaryColor,
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
             child: Column(
               children: [
-                CustomAppBar(isShowAppBar: isShowAppBar),
-                SizedBox(height: context.screenHeight * 0.05),
+                if (isShowAppBar) ...[
+                  CustomAppBar(isShowAppBar: isShowAppBar),
+                  SizedBox(height: context.screenHeight * 0.05),
+                ],
                 Expanded(child: GenerateQRGridView()),
               ],
             ),
@@ -114,7 +116,13 @@ class CustomAppBar extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(Icons.menu, color: AppColor.secondaryColor),
                   onPressed: () {
-                    // Add your delete action here
+                    CustomDialogs.showInfoDialog(
+                      context: context,
+                      title: AppStrings.commingSoon,
+                      desc: AppStrings.commingSoon,
+                      btnLabel: AppStrings.ok,
+                      onTap: () {},
+                    );
                   },
                 ),
               ),
