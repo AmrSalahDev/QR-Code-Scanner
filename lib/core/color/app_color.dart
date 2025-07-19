@@ -5,4 +5,6 @@ class AppColor {
   static Color secondaryColor = Color(0xFFFDB623);
   static Color textColor = Color(0xFFD9D9D9);
   static Color hintColor = Color.fromARGB(255, 158, 158, 158);
+  static Color borderColorInactive = Color(0xFFD9D9D9);
+  static Color borderColorActive = Color(0xFFFDB623);
 }
