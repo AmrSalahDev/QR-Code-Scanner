@@ -20,10 +20,8 @@ import 'package:qr_code_sacnner_app/features/history/presentation/screen/history
 import 'package:qr_code_sacnner_app/features/router/home_shell.dart';
 import 'package:qr_code_sacnner_app/features/scan/presentation/cubit/scan_cubit.dart';
 import 'package:qr_code_sacnner_app/features/scan/presentation/screen/scan_screen.dart';
-import 'package:qr_code_sacnner_app/features/splash/splash_screen.dart';
 
 class AppRouter {
-  static const String splash = '/';
   static const String generate = '/generate';
   static const String scan = '/scan';
   static const String history = '/history';
@@ -36,6 +34,7 @@ class AppRouter {
 final GlobalKey<ScanScreenState> scanScreenKey = GlobalKey<ScanScreenState>();
 
 final GoRouter appRouter = GoRouter(
+  initialLocation: AppRouter.scan,
   routes: [
     ShellRoute(
       builder: (context, state, child) {
@@ -71,10 +70,6 @@ final GoRouter appRouter = GoRouter(
       ],
     ),
     // This one won't have the ConvexAppBar!
-    GoRoute(
-      path: AppRouter.splash,
-      builder: (context, state) => const SplashScreen(),
-    ),
     GoRoute(
       path: AppRouter.event,
       builder: (context, state) => BlocProvider(

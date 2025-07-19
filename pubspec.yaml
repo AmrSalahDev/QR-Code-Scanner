@@ -36,6 +36,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
+  flutter_native_splash: ^2.4.6
   flutter_styled_toast: ^2.2.1
   flutter_svg: ^2.2.0
   get_it: ^8.0.3
