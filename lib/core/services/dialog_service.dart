@@ -160,7 +160,9 @@ class DialogService {
     required String title,
     required String desc,
     required String btnLabel,
+    String cancelLabel = AppStrings.cancel,
     VoidCallback? onTap,
+    VoidCallback? onCancel,
     Function(DismissType)? onDismissCallback,
   }) {
     AwesomeDialog(
@@ -171,13 +173,18 @@ class DialogService {
         size: 110,
       ),
       dialogType: DialogType.success,
-      animType: AnimType.scale,
+      animType: AnimType.bottomSlide,
       title: title,
       desc: desc,
       btnOkText: btnLabel,
       btnOkColor: AppColor.secondaryColor,
       btnOkOnPress: () {
         if (onTap != null) onTap();
+      },
+      btnCancelText: cancelLabel,
+      btnCancelColor: AppColor.secondaryColor,
+      btnCancelOnPress: () {
+        if (onCancel != null) onCancel();
       },
       onDismissCallback: onDismissCallback,
     ).show();
@@ -244,23 +251,30 @@ class DialogService {
 
   void showWarningDialog({
     required BuildContext context,
-    required String title,
+    String title = AppStrings.oops,
     required String desc,
-    required String btnLabel,
+    String btnLabel = AppStrings.ok,
     VoidCallback? onTap,
+    VoidCallback? onCancel,
+    String? cancelLabel,
+    dismissOnTouchOutside = true,
     Function(DismissType)? onDismissCallback,
   }) {
     AwesomeDialog(
       context: context,
       dialogType: DialogType.warning,
-      animType: AnimType.scale,
+      animType: AnimType.bottomSlide,
       title: title,
       desc: desc,
       btnOkText: btnLabel,
+      dismissOnTouchOutside: dismissOnTouchOutside,
       btnOkColor: AppColor.secondaryColor,
       btnOkOnPress: () {
         if (onTap != null) onTap();
       },
+      btnCancelText: cancelLabel,
+      btnCancelColor: AppColor.secondaryColor,
+      btnCancelOnPress: onCancel,
       onDismissCallback: onDismissCallback,
     ).show();
   }

@@ -11,10 +11,6 @@ class HomeShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String currentRoute = GoRouter.of(
-      context,
-    ).routerDelegate.currentConfiguration.uri.toString();
-
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       body: child,
@@ -22,11 +18,7 @@ class HomeShell extends StatelessWidget {
         height: 55,
         style: TabStyle.fixedCircle,
         activeColor: AppColor.secondaryColor,
-        initialActiveIndex: currentRoute == AppRouter.generate
-            ? 0
-            : currentRoute == AppRouter.scan
-            ? 1
-            : 0,
+        initialActiveIndex: 1,
         backgroundColor: AppColor.primaryColor,
         items: const [
           TabItem(icon: Icons.qr_code, title: AppStrings.generate),
@@ -37,11 +29,7 @@ class HomeShell extends StatelessWidget {
           if (i == 0) {
             context.go(AppRouter.generate);
           } else if (i == 1) {
-            if (currentRoute != AppRouter.scan) {
-              context.go(AppRouter.scan);
-            } else {
-              scanScreenKey.currentState?.startScan();
-            }
+            context.go(AppRouter.scan);
           } else if (i == 2) {
             context.go(AppRouter.history);
           }

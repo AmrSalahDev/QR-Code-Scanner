@@ -107,4 +107,14 @@ class AppStrings {
   static const String phoneCannotEmpty = 'Phone number cannot be empty';
   static const String emailCannotEmpty = 'Email cannot be empty';
   static const String websiteCannotEmpty = 'Website cannot be empty';
+  static const String alreadyExists = 'Already Exists';
+  static const String emptyQrCode = 'Empty QR Code';
+  static const String qRCodeAlreadyExistsInHistory =
+      'This QR Code already exists in your history';
+  static const String qRCodeScannedEmpty = 'The QR Code you scanned is empty';
+  static const String allow = 'Allow';
+  static const String deny = 'Deny';
+  static const String cameraPermissionMessage =
+      'This app needs camera permission to work correctly';
+  static const String cameraNeedPermission = 'Camera needs permission';
 }

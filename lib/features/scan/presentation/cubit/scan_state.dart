@@ -23,3 +23,13 @@ final class ScanImageSuccess extends ScanState {
 
   ScanImageSuccess(this.imagePath);
 }
+
+final class ScanImageFailure extends ScanState {
+  final String error;
+
+  ScanImageFailure(this.error);
+}
+
+final class ScanAlreadyExists extends ScanState {}
+
+final class ScanOutputIsEmpty extends ScanState {}

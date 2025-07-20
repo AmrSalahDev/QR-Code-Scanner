@@ -31,8 +31,6 @@ class AppRouter {
   static const String business = '/business';
 }
 
-final GlobalKey<ScanScreenState> scanScreenKey = GlobalKey<ScanScreenState>();
-
 final GoRouter appRouter = GoRouter(
   initialLocation: AppRouter.scan,
   routes: [
@@ -57,7 +55,7 @@ final GoRouter appRouter = GoRouter(
           path: AppRouter.scan,
           builder: (context, state) => BlocProvider(
             create: (_) => getIt<ScanCubit>(),
-            child: ScanScreen(key: scanScreenKey),
+            child: ScanScreen(),
           ),
         ),
         GoRoute(

@@ -15,9 +15,17 @@ part 'scan_state.dart';
 class ScanCubit extends Cubit<ScanState> {
   ScanCubit() : super(ScanInitial());
 
-  void addToHistory(String scannedData) {
-    final box = Hive.box<HistoryModel>(AppConstant.hiveBoxHistory);
+  final box = Hive.box<HistoryModel>(AppConstant.hiveBoxHistory);
 
+  bool isCodeExists(String code) {
+    final isExists = box.values.any((history) => history.content == code);
+    if (isExists) {
+      return true;
+    }
+    return box.values.any((element) => element.content == code);
+  }
+
+  void addToHistory(String scannedData) {
     final historyItem = HistoryModel(
       id: const Uuid().v4(),
       title: BarcodeUtils.isWifiBarcode(scannedData)
@@ -27,11 +35,19 @@ class ScanCubit extends Cubit<ScanState> {
       content: scannedData,
     );
     box.add(historyItem);
-    emit(ScanSuccess(scannedData));
   }
 
   void onQRDetected(String scannedData) async {
-    emit(ScanSuccess(scannedData));
+    if (scannedData.trim().isEmpty) {
+      emit(ScanOutputIsEmpty());
+      return;
+    } else if (isCodeExists(scannedData)) {
+      emit(ScanAlreadyExists());
+      return;
+    } else {
+      emit(ScanSuccess(scannedData));
+      addToHistory(scannedData);
+    }
   }
 
   Future<void> scanQRCodeFromImage() async {
@@ -49,15 +65,15 @@ class ScanCubit extends Cubit<ScanState> {
       final barcodes = await barcodeScanner.processImage(inputImage);
       barcodeScanner.close();
 
-      if (barcodes.isEmpty || barcodes.first.rawValue == null) {
-        emit(ScanFailure(AppStrings.noQRFoundInImage));
+      if (barcodes.isEmpty) {
+        emit(ScanImageFailure(AppStrings.noQRFoundInImage));
       } else {
         final code = barcodes.first.rawValue!;
         addToHistory(code);
         emit(ScanImageSuccess(code));
       }
     } catch (e) {
-      emit(ScanFailure(AppStrings.failedToScanQRCodeFromImage));
+      emit(ScanImageFailure(AppStrings.failedToScanQRCodeFromImage));
     }
   }
 }

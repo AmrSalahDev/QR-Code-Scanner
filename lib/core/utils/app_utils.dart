@@ -49,8 +49,20 @@ class AppUtils {
     }
   }
 
+  static void requestCameraPermission(BuildContext context) async {
+    final status = await Permission.camera.request();
+    if (!status.isGranted) {
+      print('Permission not granted');
+      return;
+    }
+  }
+
   static Future<bool> checkStoragePermission() {
     return Permission.storage.isGranted;
+  }
+
+  static Future<bool> checkCameraPermission() {
+    return Permission.camera.isGranted;
   }
 
   static Future<Uint8List> widgetToImage(GlobalKey globalKey) async {
