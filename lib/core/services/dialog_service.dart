@@ -438,7 +438,7 @@ class DialogService {
                   data: qrData,
                   version: QrVersions.auto,
                   size: 200.0,
-                  backgroundColor: AppColor.secondaryColor,
+                  backgroundColor: Colors.white,
                 ),
               ),
             ),

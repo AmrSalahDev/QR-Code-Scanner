@@ -6,9 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_icons.dart';
-import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/utils/app_utils.dart';
-import 'package:qr_code_sacnner_app/features/widgets/common_button.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class CustomDialogs {

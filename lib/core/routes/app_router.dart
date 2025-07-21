@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_code_sacnner_app/core/services/di/di.dart';
@@ -20,6 +19,7 @@ import 'package:qr_code_sacnner_app/features/history/presentation/screen/history
 import 'package:qr_code_sacnner_app/features/router/home_shell.dart';
 import 'package:qr_code_sacnner_app/features/scan/presentation/cubit/scan_cubit.dart';
 import 'package:qr_code_sacnner_app/features/scan/presentation/screen/scan_screen.dart';
+import 'package:qr_code_sacnner_app/features/view_qr_data/presentation/screens/view_qr_data_screen.dart';
 
 class AppRouter {
   static const String generate = '/generate';
@@ -29,6 +29,7 @@ class AppRouter {
   static const String settings = '/settings';
   static const String contact = '/contact';
   static const String business = '/business';
+  static const String viewQrData = '/viewQrData';
 }
 
 final GoRouter appRouter = GoRouter(
@@ -94,6 +95,15 @@ final GoRouter appRouter = GoRouter(
         ),
         child: BusinessScreen(),
       ),
+    ),
+    GoRoute(
+      path: AppRouter.viewQrData,
+      builder: (context, state) {
+        final args = state.extra as Map<String, dynamic>;
+        final data = args['data'] as String;
+        final type = args['type'] as String;
+        return ViewQrDataScreen(data: data, type: type);
+      },
     ),
   ],
 );

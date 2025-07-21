@@ -13,6 +13,8 @@ class ScanUiActions {
   static void onScanSuccess(
     BuildContext context,
     QRViewController? controller,
+    String? data,
+    String type,
   ) async {
     await controller?.pauseCamera();
     if (!context.mounted) return;
@@ -22,7 +24,10 @@ class ScanUiActions {
       title: AppStrings.qRCodeScanned,
       desc: AppStrings.qRCodeSuccessfullyScanned,
       btnLabel: AppStrings.view,
-      onTap: () => context.go(AppRouter.history),
+      onTap: () => context.push(
+        AppRouter.viewQrData,
+        extra: {'data': data, 'type': type},
+      ),
       onDismissCallback: (dismiss) async {
         await controller?.resumeCamera();
       },
@@ -31,13 +36,20 @@ class ScanUiActions {
     );
   }
 
-  static void onScanImageSuccess(BuildContext context) {
+  static void onScanImageSuccess(
+    BuildContext context,
+    String data,
+    String type,
+  ) {
     getIt<DialogService>().showSuccessDialog(
       context: context,
       title: AppStrings.qRCodeScanned,
       desc: AppStrings.qRCodeSuccessfullyScanned,
       btnLabel: AppStrings.view,
-      onTap: () => context.go(AppRouter.history),
+      onTap: () => context.push(
+        AppRouter.viewQrData,
+        extra: {'data': data, 'type': type},
+      ),
       cancelLabel: AppStrings.ok,
       onCancel: () => {},
     );

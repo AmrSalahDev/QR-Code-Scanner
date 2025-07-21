@@ -117,4 +117,8 @@ class AppStrings {
   static const String cameraPermissionMessage =
       'This app needs camera permission to work correctly';
   static const String cameraNeedPermission = 'Camera needs permission';
+  static const String addContact = 'Add contact';
+  static const String dial = 'Dial';
+  static const String emailTo = 'Email to';
+  static const String open = 'Open';
 }

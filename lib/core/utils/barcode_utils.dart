@@ -33,7 +33,7 @@ class BarcodeUtils {
     } else if (lower.startsWith('geo:')) {
       return 'Geo Location';
     } else if (lower.contains('begin:vcard')) {
-      return 'vCard (Contact)';
+      return 'Contact';
     } else {
       return 'Text';
     }

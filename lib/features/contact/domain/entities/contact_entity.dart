@@ -9,6 +9,7 @@ class ContactEntity {
   final String website;
   final String city;
   final String country;
+  final String postalCode;
 
   ContactEntity({
     required this.firstName,
@@ -21,5 +22,6 @@ class ContactEntity {
     required this.website,
     required this.city,
     required this.country,
+    required this.postalCode,
   });
 }

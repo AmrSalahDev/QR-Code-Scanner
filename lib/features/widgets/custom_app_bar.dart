@@ -20,6 +20,10 @@ class CustomAppBar extends StatelessWidget {
         ? Row(
             children: [
               Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 20,
+                ),
                 decoration: BoxDecoration(
                   color: AppColor.primaryColor,
                   borderRadius: BorderRadius.circular(10),
@@ -40,7 +44,7 @@ class CustomAppBar extends StatelessWidget {
                   onPressed: () => context.pop(),
                 ),
               ),
-              SizedBox(width: 15),
+
               Text(
                 title,
                 textAlign: TextAlign.center,
@@ -51,6 +55,7 @@ class CustomAppBar extends StatelessWidget {
               ),
               Spacer(),
               Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
                   color: AppColor.primaryColor,
                   borderRadius: BorderRadius.circular(10),

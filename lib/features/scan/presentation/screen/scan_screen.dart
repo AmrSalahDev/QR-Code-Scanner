@@ -132,9 +132,18 @@ class ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
     return BlocListener<ScanCubit, ScanState>(
       listener: (context, state) {
         if (state is ScanSuccess) {
-          ScanUiActions.onScanSuccess(context, controller);
+          ScanUiActions.onScanSuccess(
+            context,
+            controller,
+            state.scannedData,
+            state.type,
+          );
         } else if (state is ScanImageSuccess) {
-          ScanUiActions.onScanImageSuccess(context);
+          ScanUiActions.onScanImageSuccess(
+            context,
+            state.scannedData,
+            state.type,
+          );
         } else if (state is ScanAlreadyExists) {
           ScanUiActions.onScanAlreadyExists(context, controller);
         } else if (state is ScanOutputIsEmpty) {

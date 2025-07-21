@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_icons.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
-import 'package:qr_code_sacnner_app/core/services/dialog_service.dart';
 import 'package:qr_code_sacnner_app/features/generate/presentation/cubit/wifi_create_dialog_cubit.dart';
 import 'package:qr_code_sacnner_app/features/generate/presentation/cubit/generate_cubit.dart';
 import 'package:qr_code_sacnner_app/features/generate/generate_ui_actions.dart';

@@ -45,7 +45,7 @@ class ScanCubit extends Cubit<ScanState> {
       emit(ScanAlreadyExists());
       return;
     } else {
-      emit(ScanSuccess(scannedData));
+      emit(ScanSuccess(scannedData, BarcodeUtils.getQrCodeType(scannedData)));
       addToHistory(scannedData);
     }
   }
@@ -61,16 +61,18 @@ class ScanCubit extends Cubit<ScanState> {
 
       // Create an InputImage from the selected image
       final inputImage = InputImage.fromFile(File(pickedImage.path));
-      final barcodeScanner = BarcodeScanner();
+      final List<BarcodeFormat> formats = [BarcodeFormat.all];
+      final barcodeScanner = BarcodeScanner(formats: formats);
       final barcodes = await barcodeScanner.processImage(inputImage);
+
       barcodeScanner.close();
 
       if (barcodes.isEmpty) {
-        emit(ScanImageFailure(AppStrings.noQRFoundInImage));
+        emit(ScanOutputIsEmpty());
       } else {
         final code = barcodes.first.rawValue!;
         addToHistory(code);
-        emit(ScanImageSuccess(code));
+        emit(ScanImageSuccess(code, BarcodeUtils.getQrCodeType(code)));
       }
     } catch (e) {
       emit(ScanImageFailure(AppStrings.failedToScanQRCodeFromImage));

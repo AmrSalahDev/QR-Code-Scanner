@@ -7,7 +7,6 @@ import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/extensions/context_extensions.dart';
 import 'package:qr_code_sacnner_app/core/services/di/di.dart';
 import 'package:qr_code_sacnner_app/core/services/dialog_service.dart';
-import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
 import 'package:qr_code_sacnner_app/features/contact/domain/entities/contact_entity.dart';
 import 'package:qr_code_sacnner_app/features/contact/presentation/cubit/contact_cubit.dart';
 import 'package:qr_code_sacnner_app/features/widgets/common_button.dart';
@@ -66,7 +65,12 @@ class _ContactScreenState extends State<ContactScreen> {
         child: BlocListener<ContactCubit, ContactState>(
           listener: (context, state) {
             if (state is ContactFormSuccess) {
-              CustomDialogs.showQRcodeDialog(
+              // CustomDialogs.showQRcodeDialog(
+              //   context,
+              //   state.qrCode,
+              //   AppStrings.contact,
+              // );
+              getIt<DialogService>().showQRcodeDialog(
                 context,
                 state.qrCode,
                 AppStrings.contact,
@@ -159,6 +163,7 @@ class _ContactScreenState extends State<ContactScreen> {
                         website: website.text,
                         city: city.text,
                         country: country.text,
+                        postalCode: '',
                       );
                       context.read<ContactCubit>().submit(contact);
                     },

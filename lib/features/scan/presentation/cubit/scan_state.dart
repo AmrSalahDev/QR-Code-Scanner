@@ -6,8 +6,9 @@ final class ScanInitial extends ScanState {}
 
 final class ScanSuccess extends ScanState {
   final String scannedData;
+  final String type;
 
-  ScanSuccess(this.scannedData);
+  ScanSuccess(this.scannedData, this.type);
 }
 
 final class ScanFailure extends ScanState {
@@ -19,9 +20,10 @@ final class ScanFailure extends ScanState {
 final class ScanLoading extends ScanState {}
 
 final class ScanImageSuccess extends ScanState {
-  final String imagePath;
+  final String scannedData;
+  final String type;
 
-  ScanImageSuccess(this.imagePath);
+  ScanImageSuccess(this.scannedData, this.type);
 }
 
 final class ScanImageFailure extends ScanState {

@@ -13,6 +13,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppUtils {
   static void openWifiSettings() {
@@ -168,5 +169,60 @@ class AppUtils {
     final formattedDate = DateFormat.yMMMMd().format(dateTime);
     final formattedTime = DateFormat('jm').format(dateTime);
     return '$formattedDate, $formattedTime';
+  }
+
+  static void openMap(String address) async {
+    final uri = Uri.parse(
+      'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(address)}',
+    );
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch map for $address';
+    }
+  }
+
+  static bool isValidAddress(String address) {
+    return address.trim().isNotEmpty &&
+        RegExp(r'[a-zA-Z]{2,}').hasMatch(address); // contains some text
+  }
+
+  static bool isValidUrl(String url) {
+    if (!url.startsWith(RegExp(r'https?://'))) {
+      url = 'https://$url'; // assume HTTPS if no scheme provided
+    }
+
+    final uri = Uri.tryParse(url);
+    return uri != null && uri.isAbsolute && uri.host.contains('.');
+  }
+
+  static bool isNumeric(String text) {
+    final numericRegex = RegExp(r'^[0-9]+$');
+    return numericRegex.hasMatch(text);
+  }
+
+  static Future<void> dialPhoneNumber(String number) async {
+    final Uri url = Uri(scheme: 'tel', path: number);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  static List<String> extractPhoneNumbers(String vCardContent) {
+    final lines = vCardContent.split('\n');
+    final phoneNumbers = <String>[];
+
+    for (var line in lines) {
+      if (line.trim().startsWith('TEL')) {
+        final parts = line.split(':');
+        if (parts.length == 2) {
+          phoneNumbers.add(parts[1].trim());
+        }
+      }
+    }
+
+    return phoneNumbers;
   }
 }

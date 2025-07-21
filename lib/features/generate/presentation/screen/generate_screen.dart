@@ -68,7 +68,7 @@ class GenerateQRGridView extends StatelessWidget {
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
-            generateList[index].onTap!(context);
+            generateList[index].onTap(context);
           },
           child: GenerateQRItem(index: index),
         );
@@ -99,7 +99,7 @@ class GenerateQRItem extends StatelessWidget {
             vertical: constraints.maxHeight * 0.3,
           ),
           child: SvgPicture.asset(
-            generateList[index].svgPath!,
+            generateList[index].svgPath,
             colorFilter: ColorFilter.mode(
               AppColor.secondaryColor,
               BlendMode.srcIn,

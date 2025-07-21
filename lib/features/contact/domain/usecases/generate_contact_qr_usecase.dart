@@ -2,6 +2,17 @@ import 'package:qr_code_sacnner_app/features/contact/domain/entities/contact_ent
 
 class GenerateContactQrUseCase {
   String execute(ContactEntity contact) {
-    return 'BEGIN:VCARD\nVERSION:3.0\nN:${contact.lastName};${contact.firstName}\nORG:${contact.company}\nTITLE:${contact.job}\nTEL:${contact.phone}\nEMAIL:${contact.email}\nURL:${contact.website}\nADR:${contact.address};${contact.city};${contact.country}\nEND:VCARD';
+    return '''
+BEGIN:VCARD
+VERSION:3.0
+N:${contact.lastName};${contact.firstName}
+FN:${contact.firstName} ${contact.lastName}
+ORG:${contact.company}
+TITLE:${contact.job}
+TEL:${contact.phone}
+EMAIL:${contact.email}
+URL:${contact.website}
+ADR;TYPE=home:;;${contact.address};${contact.city};;${contact.postalCode};${contact.country}
+END:VCARD''';
   }
 }
