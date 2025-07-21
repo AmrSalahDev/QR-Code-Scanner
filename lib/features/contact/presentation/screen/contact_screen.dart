@@ -65,11 +65,6 @@ class _ContactScreenState extends State<ContactScreen> {
         child: BlocListener<ContactCubit, ContactState>(
           listener: (context, state) {
             if (state is ContactFormSuccess) {
-              // CustomDialogs.showQRcodeDialog(
-              //   context,
-              //   state.qrCode,
-              //   AppStrings.contact,
-              // );
               getIt<DialogService>().showQRcodeDialog(
                 context,
                 state.qrCode,
@@ -82,95 +77,99 @@ class _ContactScreenState extends State<ContactScreen> {
               );
             }
           },
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  CustomAppBar(title: AppStrings.contact),
-                  SizedBox(height: context.screenHeight * 0.04),
-                  SvgPicture.asset(
-                    height: context.screenHeight * 0.15,
-                    width: context.screenWidth * 0.15,
-                    AppIcons.contact,
-                    colorFilter: ColorFilter.mode(
-                      AppColor.secondaryColor,
-                      BlendMode.srcIn,
-                    ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                CustomAppBar(title: AppStrings.contact),
+                SizedBox(height: context.screenHeight * 0.04),
+                SvgPicture.asset(
+                  height: context.screenHeight * 0.15,
+                  width: context.screenWidth * 0.15,
+                  AppIcons.contact,
+                  colorFilter: ColorFilter.mode(
+                    AppColor.secondaryColor,
+                    BlendMode.srcIn,
                   ),
+                ),
 
-                  SizedBox(height: context.screenHeight * 0.04),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      SizedBox(height: context.screenHeight * 0.04),
 
-                  CustomTextFieldWithTwoInput(
-                    controller1: firstNameController,
-                    label1: AppStrings.firstName,
-                    hint1: AppStrings.firstNameHint,
-                    controller2: lastNameController,
-                    label2: AppStrings.lastName,
-                    hint2: AppStrings.lastNameHint,
+                      CustomTextFieldWithTwoInput(
+                        controller1: firstNameController,
+                        label1: AppStrings.firstName,
+                        hint1: AppStrings.firstNameHint,
+                        controller2: lastNameController,
+                        label2: AppStrings.lastName,
+                        hint2: AppStrings.lastNameHint,
+                      ),
+
+                      CustomTextFieldWithTwoInput(
+                        controller1: company,
+                        label1: AppStrings.company,
+                        hint1: AppStrings.companyHint,
+                        controller2: job,
+                        label2: AppStrings.job,
+                        hint2: AppStrings.jobHint,
+                      ),
+
+                      CustomTextFieldWithTwoInput(
+                        controller1: email,
+                        label1: AppStrings.email,
+                        hint1: AppStrings.enterEmail,
+                        controller2: phone,
+                        label2: AppStrings.phone,
+                        hint2: AppStrings.enterPhoneNumber,
+                      ),
+
+                      CustomTextField(
+                        label: AppStrings.website,
+                        hint: AppStrings.enterUrl,
+                        controller: website,
+                      ),
+
+                      CustomTextField(
+                        label: AppStrings.address,
+                        hint: AppStrings.addressHint,
+                        controller: address,
+                      ),
+
+                      CustomTextFieldWithTwoInput(
+                        controller1: city,
+                        controller2: country,
+                        label1: AppStrings.city,
+                        label2: AppStrings.country,
+                        hint1: AppStrings.cityHint,
+                        hint2: AppStrings.countryHint,
+                      ),
+
+                      CommonButton(
+                        btnLabel: AppStrings.generateQrCode,
+                        onTap: () {
+                          final contact = ContactEntity(
+                            firstName: firstNameController.text,
+                            lastName: lastNameController.text,
+                            company: company.text,
+                            job: job.text,
+                            email: email.text,
+                            phone: phone.text,
+                            address: address.text,
+                            website: website.text,
+                            city: city.text,
+                            country: country.text,
+                            postalCode: '',
+                          );
+                          context.read<ContactCubit>().submit(contact);
+                        },
+                      ),
+                    ],
                   ),
-
-                  CustomTextFieldWithTwoInput(
-                    controller1: company,
-                    label1: AppStrings.company,
-                    hint1: AppStrings.companyHint,
-                    controller2: job,
-                    label2: AppStrings.job,
-                    hint2: AppStrings.jobHint,
-                  ),
-
-                  CustomTextFieldWithTwoInput(
-                    controller1: email,
-                    label1: AppStrings.email,
-                    hint1: AppStrings.enterEmail,
-                    controller2: phone,
-                    label2: AppStrings.phone,
-                    hint2: AppStrings.enterPhoneNumber,
-                  ),
-
-                  CustomTextField(
-                    label: AppStrings.website,
-                    hint: AppStrings.enterUrl,
-                    controller: website,
-                  ),
-
-                  CustomTextField(
-                    label: AppStrings.address,
-                    hint: AppStrings.addressHint,
-                    controller: address,
-                  ),
-
-                  CustomTextFieldWithTwoInput(
-                    controller1: city,
-                    controller2: country,
-                    label1: AppStrings.city,
-                    label2: AppStrings.country,
-                    hint1: AppStrings.cityHint,
-                    hint2: AppStrings.countryHint,
-                  ),
-
-                  CommonButton(
-                    btnLabel: AppStrings.generateQrCode,
-                    onTap: () {
-                      final contact = ContactEntity(
-                        firstName: firstNameController.text,
-                        lastName: lastNameController.text,
-                        company: company.text,
-                        job: job.text,
-                        email: email.text,
-                        phone: phone.text,
-                        address: address.text,
-                        website: website.text,
-                        city: city.text,
-                        country: country.text,
-                        postalCode: '',
-                      );
-                      context.read<ContactCubit>().submit(contact);
-                    },
-                  ),
-                  SizedBox(height: context.screenHeight * 0.04),
-                ],
-              ),
+                ),
+                SizedBox(height: context.screenHeight * 0.04),
+              ],
             ),
           ),
         ),

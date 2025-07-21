@@ -27,20 +27,23 @@ class GenerateScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColor.primaryColor,
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-            child: Column(
-              children: [
-                if (isShowAppBar) ...[
-                  CustomAppBar(
-                    title: AppStrings.generate,
-                    shouldShowAppBar: isShowAppBar,
-                  ),
-                  SizedBox(height: context.screenHeight * 0.05),
-                ],
-                Expanded(child: GenerateQRGridView()),
+          child: Column(
+            children: [
+              if (isShowAppBar) ...[
+                CustomAppBar(
+                  title: AppStrings.generate,
+                  shouldShowAppBar: isShowAppBar,
+                  shouldShowBackButton: false,
+                ),
+                SizedBox(height: context.screenHeight * 0.03),
               ],
-            ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: GenerateQRGridView(),
+                ),
+              ),
+            ],
           ),
         ),
       ),

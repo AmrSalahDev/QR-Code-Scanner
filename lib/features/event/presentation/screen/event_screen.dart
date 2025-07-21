@@ -25,13 +25,13 @@ class EventScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            children: [
-              CustomAppBar(title: AppStrings.event),
-              const SizedBox(height: 20),
-              Expanded(
+        child: Column(
+          children: [
+            CustomAppBar(title: AppStrings.event),
+            const SizedBox(height: 20),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,8 +75,8 @@ class EventScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

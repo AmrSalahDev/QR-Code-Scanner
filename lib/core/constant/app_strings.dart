@@ -121,4 +121,14 @@ class AppStrings {
   static const String dial = 'Dial';
   static const String emailTo = 'Email to';
   static const String open = 'Open';
+  static const String viewAddress = 'View Address';
+  static const String viewData = 'View data';
+  static const String name = 'Name';
+  static const String organization = 'Organization';
+  static const String title = 'Title';
+  static const String birthday = 'Birthday';
+  static const String note = 'Note';
+  static const String connectToWifi = 'Connect to WI-FI';
+  static const String copyPassword = 'Copy Password';
+  static const String copyWifiName = 'Copy WI-FI Name';
 }

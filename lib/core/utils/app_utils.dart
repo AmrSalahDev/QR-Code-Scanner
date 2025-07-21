@@ -6,11 +6,14 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart' as Fluttertoast;
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -224,5 +227,60 @@ class AppUtils {
     }
 
     return phoneNumbers;
+  }
+
+  static Future<void> openUrl(String url) async {
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      url = 'https://$url';
+    }
+
+    final uri = Uri.parse(url);
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  static Future<void> openEmail(String email) async {
+    final intent = AndroidIntent(
+      action: 'android.intent.action.SENDTO',
+      data: Uri.encodeFull('mailto:$email'),
+    );
+
+    try {
+      await intent.launchChooser('Choose an email app');
+    } on PlatformException catch (e) {
+      print('No email app found: $e');
+    }
+  }
+
+  static Future<void> openWhatsApp(String phoneNumber) async {
+    String url = 'https://wa.me/$phoneNumber';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  static Future<void> openSMS(String phoneNumber) async {
+    String url = 'sms:$phoneNumber';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  static Future<void> copyToClipboard(BuildContext context, String text) async {
+    await Clipboard.setData(ClipboardData(text: text));
+    if (!context.mounted) return;
+    Fluttertoast.showToast(
+      context: context,
+      'Copied to clipboard!',
+      backgroundColor: AppColor.secondaryColor,
+    );
   }
 }

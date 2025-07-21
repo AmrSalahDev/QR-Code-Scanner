@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_icons.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
+import 'package:qr_code_sacnner_app/core/extensions/context_extensions.dart';
 import 'package:qr_code_sacnner_app/core/utils/app_utils.dart';
 import 'package:qr_code_sacnner_app/core/utils/barcode_utils.dart';
 import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
@@ -24,7 +25,7 @@ class HistoryScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         backgroundColor: AppColor.primaryColor,
-        appBar: CustomAppBar(),
+        appBar: _CustomAppBar(),
         body: TabBarView(
           children: [
             Column(
@@ -181,7 +182,12 @@ class HistoryScreen extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) => GenerateCubit(),
-              child: GenerateScreen(isShowAppBar: false),
+              child: Column(
+                children: [
+                  SizedBox(height: context.screenHeight * 0.03),
+                  Expanded(child: GenerateScreen(isShowAppBar: false)),
+                ],
+              ),
             ),
           ],
         ),
@@ -190,11 +196,11 @@ class HistoryScreen extends StatelessWidget {
   }
 }
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 
-  CustomAppBar({super.key}) : preferredSize = Size.fromHeight(135);
+  _CustomAppBar({super.key}) : preferredSize = Size.fromHeight(135);
 
   @override
   Widget build(BuildContext context) {

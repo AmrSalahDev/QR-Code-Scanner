@@ -1,16 +1,19 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/extensions/context_extensions.dart';
 import 'package:qr_code_sacnner_app/core/services/native_bridge.dart';
 import 'package:qr_code_sacnner_app/core/utils/app_utils.dart';
+import 'package:qr_code_sacnner_app/core/utils/screen_utils.dart';
+import 'package:qr_code_sacnner_app/features/view_qr_data/data/models/wifi_model.dart';
 import 'package:qr_code_sacnner_app/features/view_qr_data/data/vcard_model.dart';
+import 'package:qr_code_sacnner_app/features/view_qr_data/presentation/cubit/view_qr_data_cubit.dart';
 import 'package:qr_code_sacnner_app/features/widgets/custom_app_bar.dart';
 import 'package:qr_code_sacnner_app/features/widgets/custom_icon_button.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ViewQrDataScreen extends StatefulWidget {
   final String data;
@@ -24,7 +27,8 @@ class ViewQrDataScreen extends StatefulWidget {
 class _ViewQrDataScreenState extends State<ViewQrDataScreen> {
   @override
   Widget build(BuildContext context) {
-    final parsed = VCardModel.fromRaw(widget.data);
+    final vCardModel = VCardModel.fromRaw(widget.data);
+    context.read<ViewQrDataCubit>().setType(widget.type);
 
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
@@ -61,16 +65,168 @@ class _ViewQrDataScreenState extends State<ViewQrDataScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: context.screenHeight * 0.06),
-
-              ContactSection(contact: parsed, data: widget.data),
-
+              BlocBuilder<ViewQrDataCubit, String>(
+                builder: (context, state) {
+                  if (state == 'contact') {
+                    return ContactSection(
+                      contact: vCardModel,
+                      data: widget.data,
+                    );
+                  } else if (state == 'wifi') {
+                    return WifiSection(data: widget.data);
+                  }
+                  return TextSection(data: widget.data);
+                },
+              ),
               SizedBox(height: context.screenHeight * 0.06),
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+class WifiSection extends StatelessWidget {
+  WifiSection({super.key, required this.data});
+  final String data;
+  late WifiModel wifiModel;
+
+  @override
+  Widget build(BuildContext context) {
+    wifiModel = WifiModel.fromRaw(data);
+    final isLandScape = ScreenUtils.isLandscape(context);
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.wifi,
+                color: AppColor.secondaryColor,
+                size: isLandScape
+                    ? context.screenHeight * 0.30
+                    : context.screenHeight * 0.15,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text.rich(
+                    TextSpan(
+                      text: '${AppStrings.networkName}: ',
+                      style: TextStyle(color: AppColor.textColor),
+                      children: [
+                        TextSpan(
+                          text: wifiModel.ssid,
+                          style: TextStyle(color: AppColor.secondaryColor),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text.rich(
+                    TextSpan(
+                      text: '${AppStrings.type}: ',
+                      style: TextStyle(color: AppColor.textColor),
+                      children: [
+                        TextSpan(
+                          text: wifiModel.type,
+                          style: TextStyle(color: AppColor.secondaryColor),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text.rich(
+                    TextSpan(
+                      text: '${AppStrings.password}: ',
+                      style: TextStyle(color: AppColor.textColor),
+                      children: [
+                        TextSpan(
+                          text: wifiModel.password,
+                          style: TextStyle(color: AppColor.secondaryColor),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: context.screenHeight * 0.03),
+        IconButton(
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(AppColor.secondaryColor),
+          ),
+          padding: EdgeInsets.all(20),
+          onPressed: () => AppUtils.openWifiSettings(),
+          icon: Icon(Icons.wifi, color: Colors.white),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          AppStrings.connectToWifi,
+          style: TextStyle(color: AppColor.textColor),
+        ),
+        SizedBox(height: context.screenHeight * 0.03),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Column(
+              children: [
+                IconButton(
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(
+                      AppColor.secondaryColor,
+                    ),
+                  ),
+                  padding: EdgeInsets.all(20),
+                  onPressed: () =>
+                      AppUtils.copyToClipboard(context, wifiModel.password),
+                  icon: Icon(Icons.copy, color: Colors.white),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  AppStrings.copyPassword,
+                  style: TextStyle(color: AppColor.textColor),
+                ),
+              ],
+            ),
+
+            Column(
+              children: [
+                IconButton(
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(
+                      AppColor.secondaryColor,
+                    ),
+                  ),
+                  padding: EdgeInsets.all(20),
+                  onPressed: () =>
+                      AppUtils.copyToClipboard(context, wifiModel.ssid),
+                  icon: Icon(Icons.copy, color: Colors.white),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  AppStrings.copyWifiName,
+                  style: TextStyle(color: AppColor.textColor),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class TextSection extends StatelessWidget {
+  final String data;
+  const TextSection({super.key, required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(child: Text(data));
   }
 }
 
@@ -82,8 +238,14 @@ class ContactSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = TextStyle(color: AppColor.textColor);
-    final subTextStyle = TextStyle(color: AppColor.secondaryColor);
+    final textStyle = TextStyle(
+      color: AppColor.textColor,
+      fontSize: context.textScaler.scale(16),
+    );
+    final subTextStyle = TextStyle(
+      color: AppColor.secondaryColor,
+      fontSize: context.textScaler.scale(14),
+    );
 
     List<Widget> buildTiles() {
       final fields = <Widget>[];
@@ -94,6 +256,7 @@ class ContactSection extends StatelessWidget {
             ListTile(
               title: Text(title, style: textStyle),
               subtitle: Text(value, style: subTextStyle),
+              onLongPress: () => AppUtils.copyToClipboard(context, value),
             ),
           );
         }
@@ -106,6 +269,7 @@ class ContactSection extends StatelessWidget {
               ListTile(
                 title: Text(title, style: textStyle),
                 subtitle: Text(value, style: subTextStyle),
+                onLongPress: () => AppUtils.copyToClipboard(context, value),
               ),
             );
           }
@@ -113,19 +277,19 @@ class ContactSection extends StatelessWidget {
       }
 
       if (contact.firstName != null && contact.lastName != null) {
-        addTile('First Name', contact.firstName);
-        addTile('Last Name', contact.lastName);
+        addTile(AppStrings.firstName, contact.firstName);
+        addTile(AppStrings.lastName, contact.lastName);
       } else {
-        addTile('Name', contact.fullName);
+        addTile(AppStrings.name, contact.fullName);
       }
 
-      addMultiTile('Phone', contact.phones);
-      addMultiTile('Email', contact.emails);
-      addTile('Organization', contact.organization);
-      addTile('Title', contact.title);
-      addMultiTile('Address', contact.addresses);
-      addMultiTile('Website', contact.websites);
-      addTile('Note', contact.note);
+      addMultiTile(AppStrings.phone, contact.phones);
+      addMultiTile(AppStrings.email, contact.emails);
+      addTile(AppStrings.organization, contact.organization);
+      addTile(AppStrings.title, contact.title);
+      addMultiTile(AppStrings.address, contact.addresses);
+      addMultiTile(AppStrings.website, contact.websites);
+      addTile(AppStrings.note, contact.note);
 
       return fields;
     }
@@ -157,7 +321,13 @@ class ContactSection extends StatelessWidget {
               color: AppColor.secondaryColor,
             ),
             leading: Icon(Icons.person, color: AppColor.secondaryColor),
-            title: Text('View data', style: textStyle),
+            title: Text(
+              AppStrings.viewData,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: context.textScaler.scale(16),
+              ),
+            ),
             children: buildTiles(),
           ),
         ),
@@ -188,7 +358,9 @@ class ContactSection extends StatelessWidget {
             )) ...[
           SizedBox(height: context.screenHeight * 0.04),
           CustomIconButton(
-            onPressed: () {},
+            onPressed: () {
+              AppUtils.openEmail(contact.emails.first);
+            },
             label: '${AppStrings.emailTo} ${contact.emails.first}',
             icon: Icons.email,
           ),
@@ -199,7 +371,9 @@ class ContactSection extends StatelessWidget {
             )) ...[
           SizedBox(height: context.screenHeight * 0.04),
           CustomIconButton(
-            onPressed: () {},
+            onPressed: () {
+              AppUtils.openUrl(contact.websites.first);
+            },
             label: '${AppStrings.open} ${contact.websites.first}',
             icon: Icons.open_in_browser,
           ),
@@ -215,7 +389,7 @@ class ContactSection extends StatelessWidget {
             onPressed: () {
               AppUtils.openMap(contact.addresses.first);
             },
-            label: 'View Address ${contact.addresses.first}',
+            label: '${AppStrings.viewAddress} ${contact.addresses.first}',
             icon: Icons.location_on,
           ),
         ],
