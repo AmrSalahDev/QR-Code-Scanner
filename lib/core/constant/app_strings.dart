@@ -131,4 +131,6 @@ class AppStrings {
   static const String connectToWifi = 'Connect to WI-FI';
   static const String copyPassword = 'Copy Password';
   static const String copyWifiName = 'Copy WI-FI Name';
+  static const String pickLocation = 'Pick Location';
+  static const String qrCode = 'QR Code';
 }

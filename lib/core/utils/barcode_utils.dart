@@ -1,3 +1,5 @@
+import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
+
 class BarcodeUtils {
   static Map<String, String>? _parseWifiBarcode(String data) {
     try {
@@ -37,6 +39,47 @@ class BarcodeUtils {
     } else {
       return 'Text';
     }
+  }
+
+  static String generateQRCode(String label, String input) {
+    String qrData = '';
+
+    switch (label) {
+      case 'Text':
+        qrData = input;
+        break;
+      case 'Website':
+        qrData = input.startsWith('http') ? input : 'https://$input';
+        break;
+      case 'Whatsapp':
+        qrData = 'https://wa.me/$input';
+        break;
+      case 'Email':
+        qrData = 'mailto:$input';
+        break;
+      case 'Instagram':
+        qrData = 'https://instagram.com/$input';
+        break;
+      case 'Twitter':
+        qrData = 'https://twitter.com/$input';
+        break;
+      case 'Location':
+        qrData = 'https://www.google.com/maps/search/?api=1&query=$input';
+        break;
+      case 'Phone':
+        qrData = 'tel:$input';
+        break;
+      case 'Event':
+        qrData = input;
+        break;
+      case AppStrings.wifi:
+        qrData = input;
+        break;
+      default:
+        qrData = input;
+    }
+
+    return qrData;
   }
 
   static bool isWifiBarcode(String data) =>

@@ -2,26 +2,31 @@ part of 'history_cubit.dart';
 
 abstract class HistoryState {}
 
-final class HistoryInitial extends HistoryState {}
+class HistoryInitial extends HistoryState {}
 
-final class HistoryLoading extends HistoryState {}
+class HistoryLoading extends HistoryState {}
 
-final class HistoryLoaded extends HistoryState {
-  final List<HistoryModel> histories;
+class HistoryLoaded extends HistoryState {
+  final List<HistoryViewData> histories;
+
   HistoryLoaded(this.histories);
 }
 
-final class HistoryFailure extends HistoryState {
+class HistoryFailure extends HistoryState {
   final String message;
+
   HistoryFailure(this.message);
 }
 
-final class HistoryDeleteSuccess extends HistoryState {}
-
-final class HistoryDeleteFailure extends HistoryState {
-  final String message;
+class HistoryDeleteSuccess extends HistoryState {
   final String id;
-  HistoryDeleteFailure(this.message, this.id);
+
+  HistoryDeleteSuccess(this.id);
 }
 
-final class HistoryDeleteLoading extends HistoryState {}
+class HistoryDeleteFailure extends HistoryState {
+  final String id;
+  final String message;
+
+  HistoryDeleteFailure(this.id, this.message);
+}

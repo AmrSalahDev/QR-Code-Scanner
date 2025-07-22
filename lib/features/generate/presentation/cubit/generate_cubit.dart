@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_icons.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
-import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
+import 'package:qr_code_sacnner_app/core/services/di/di.dart';
+import 'package:qr_code_sacnner_app/core/services/dialog_service.dart';
 part 'generate_state.dart';
 
 class GenerateCubit extends Cubit<GenerateState> {
@@ -11,25 +12,25 @@ class GenerateCubit extends Cubit<GenerateState> {
   void showDialog(String label, BuildContext context) {
     switch (label) {
       case AppStrings.text:
-        CustomDialogs.showSimpleDialog(
+        getIt<DialogService>().showSimpleDialog(
           context: context,
           labelText: AppStrings.enterText,
-          icon: Icons.text_fields,
+          svgPath: AppIcons.text,
           btnLabel: AppStrings.generateQrCode,
           onTap: (value) => generateQRCode(AppStrings.text, value),
         );
         break;
       case AppStrings.website:
-        CustomDialogs.showSimpleDialog(
+        getIt<DialogService>().showSimpleDialog(
           context: context,
           labelText: AppStrings.enterUrl,
-          icon: Icons.link,
+          svgPath: AppIcons.website,
           btnLabel: AppStrings.generateQrCode,
           onTap: (value) => generateQRCode(AppStrings.website, value),
         );
         break;
       case AppStrings.whatsapp:
-        CustomDialogs.showSimpleDialog(
+        getIt<DialogService>().showSimpleDialog(
           context: context,
           labelText: AppStrings.enterPhoneNumber,
           svgPath: AppIcons.whatsapp,
@@ -38,17 +39,17 @@ class GenerateCubit extends Cubit<GenerateState> {
         );
         break;
       case AppStrings.email:
-        CustomDialogs.showSimpleDialog(
+        getIt<DialogService>().showSimpleDialog(
           context: context,
           labelText: AppStrings.enterEmail,
-          icon: Icons.email,
+          svgPath: AppIcons.email,
           btnLabel: AppStrings.generateQrCode,
           onTap: (value) => generateQRCode(AppStrings.email, value),
         );
         break;
 
       case AppStrings.instagram:
-        CustomDialogs.showSimpleDialog(
+        getIt<DialogService>().showSimpleDialog(
           context: context,
           labelText: AppStrings.enterUsername,
           svgPath: AppIcons.instagram,
@@ -57,7 +58,7 @@ class GenerateCubit extends Cubit<GenerateState> {
         );
         break;
       case AppStrings.twitter:
-        CustomDialogs.showSimpleDialog(
+        getIt<DialogService>().showSimpleDialog(
           context: context,
           labelText: AppStrings.enterUsername,
           svgPath: AppIcons.twitter,
@@ -66,10 +67,10 @@ class GenerateCubit extends Cubit<GenerateState> {
         );
         break;
       case AppStrings.phone:
-        CustomDialogs.showSimpleDialog(
+        getIt<DialogService>().showSimpleDialog(
           context: context,
           labelText: AppStrings.enterPhoneNumber,
-          icon: Icons.phone,
+          svgPath: AppIcons.phone,
           btnLabel: AppStrings.generateQrCode,
           onTap: (value) => generateQRCode(AppStrings.phone, value),
         );
@@ -98,6 +99,9 @@ class GenerateCubit extends Cubit<GenerateState> {
         break;
       case 'Twitter':
         qrData = 'https://twitter.com/$input';
+        break;
+      case 'Location':
+        qrData = 'https://www.google.com/maps/search/?api=1&query=$input';
         break;
       case 'Phone':
         qrData = 'tel:$input';

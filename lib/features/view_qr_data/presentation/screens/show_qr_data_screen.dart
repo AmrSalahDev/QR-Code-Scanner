@@ -15,16 +15,16 @@ import 'package:qr_code_sacnner_app/features/widgets/custom_app_bar.dart';
 import 'package:qr_code_sacnner_app/features/widgets/custom_icon_button.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class ViewQrDataScreen extends StatefulWidget {
+class ShowQrDataScreen extends StatefulWidget {
   final String data;
   final String type;
-  const ViewQrDataScreen({super.key, required this.data, required this.type});
+  const ShowQrDataScreen({super.key, required this.data, required this.type});
 
   @override
-  State<ViewQrDataScreen> createState() => _ViewQrDataScreenState();
+  State<ShowQrDataScreen> createState() => _ViewQrDataScreenState();
 }
 
-class _ViewQrDataScreenState extends State<ViewQrDataScreen> {
+class _ViewQrDataScreenState extends State<ShowQrDataScreen> {
   @override
   Widget build(BuildContext context) {
     final vCardModel = VCardModel.fromRaw(widget.data);
@@ -75,7 +75,10 @@ class _ViewQrDataScreenState extends State<ViewQrDataScreen> {
                   } else if (state == 'wifi') {
                     return WifiSection(data: widget.data);
                   }
-                  return TextSection(data: widget.data);
+                  return TextSection(
+                    data: widget.data,
+                    type: widget.type.toLowerCase(),
+                  );
                 },
               ),
               SizedBox(height: context.screenHeight * 0.06),
@@ -222,11 +225,84 @@ class WifiSection extends StatelessWidget {
 
 class TextSection extends StatelessWidget {
   final String data;
-  const TextSection({super.key, required this.data});
+  final String type;
+  const TextSection({super.key, required this.data, required this.type});
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text(data));
+    return Center(
+      child: Column(
+        children: [
+          SizedBox(height: context.screenHeight * 0.03),
+          Container(
+            padding: const EdgeInsets.all(20),
+            child: Text(
+              data,
+              style: type == 'url'
+                  ? TextStyle(
+                      decorationColor: AppColor.secondaryColor,
+                      decorationThickness: 1.5,
+                      color: AppColor.secondaryColor,
+                      decoration: TextDecoration.underline,
+                      fontSize: context.textScaler.scale(18),
+                    )
+                  : TextStyle(
+                      color: AppColor.secondaryColor,
+                      fontSize: context.textScaler.scale(18),
+                    ),
+            ),
+          ),
+          SizedBox(height: context.screenHeight * 0.03),
+          Row(
+            mainAxisAlignment: type == 'url'
+                ? MainAxisAlignment.spaceAround
+                : MainAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  IconButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(
+                        AppColor.secondaryColor,
+                      ),
+                    ),
+                    padding: EdgeInsets.all(20),
+                    onPressed: () => AppUtils.copyToClipboard(context, data),
+                    icon: Icon(Icons.copy, color: Colors.white),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    AppStrings.copy,
+                    style: TextStyle(color: AppColor.textColor),
+                  ),
+                ],
+              ),
+              type == 'url'
+                  ? Column(
+                      children: [
+                        IconButton(
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(
+                              AppColor.secondaryColor,
+                            ),
+                          ),
+                          padding: EdgeInsets.all(20),
+                          onPressed: () => AppUtils.openUrl(data),
+                          icon: Icon(Icons.open_in_new, color: Colors.white),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          AppStrings.open,
+                          style: TextStyle(color: AppColor.textColor),
+                        ),
+                      ],
+                    )
+                  : SizedBox.shrink(),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -296,6 +372,7 @@ class ContactSection extends StatelessWidget {
 
     return Column(
       children: [
+        SizedBox(height: context.screenHeight * 0.06),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
@@ -303,7 +380,7 @@ class ContactSection extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Colors.black26,
+                color: Colors.black38,
                 blurRadius: 15,
                 offset: Offset(0, 2),
               ),

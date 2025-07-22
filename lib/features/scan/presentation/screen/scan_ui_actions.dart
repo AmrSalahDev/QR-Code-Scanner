@@ -25,7 +25,7 @@ class ScanUiActions {
       desc: AppStrings.qRCodeSuccessfullyScanned,
       btnLabel: AppStrings.view,
       onTap: () => context.push(
-        AppRouter.viewQrData,
+        AppRouter.showQrData,
         extra: {'data': data, 'type': type},
       ),
       onDismissCallback: (dismiss) async {
@@ -47,7 +47,7 @@ class ScanUiActions {
       desc: AppStrings.qRCodeSuccessfullyScanned,
       btnLabel: AppStrings.view,
       onTap: () => context.push(
-        AppRouter.viewQrData,
+        AppRouter.showQrData,
         extra: {'data': data, 'type': type},
       ),
       cancelLabel: AppStrings.ok,

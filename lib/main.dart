@@ -38,6 +38,17 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         routerConfig: appRouter,
         debugShowCheckedModeBanner: false,
+        theme: appThemeData(),
+      ),
+    );
+  }
+
+  ThemeData appThemeData() {
+    return ThemeData(
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: AppColor.secondaryColor,
+        selectionColor: AppColor.secondaryColor.withValues(alpha: 0.4),
+        selectionHandleColor: AppColor.secondaryColor,
       ),
     );
   }

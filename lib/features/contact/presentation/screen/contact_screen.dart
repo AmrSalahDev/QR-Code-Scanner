@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_icons.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/extensions/context_extensions.dart';
+import 'package:qr_code_sacnner_app/core/routes/app_router.dart';
 import 'package:qr_code_sacnner_app/core/services/di/di.dart';
 import 'package:qr_code_sacnner_app/core/services/dialog_service.dart';
 import 'package:qr_code_sacnner_app/features/contact/domain/entities/contact_entity.dart';
@@ -65,10 +67,9 @@ class _ContactScreenState extends State<ContactScreen> {
         child: BlocListener<ContactCubit, ContactState>(
           listener: (context, state) {
             if (state is ContactFormSuccess) {
-              getIt<DialogService>().showQRcodeDialog(
-                context,
-                state.qrCode,
-                AppStrings.contact,
+              context.push(
+                AppRouter.showQrCode,
+                extra: {'qrData': state.qrCode},
               );
             } else if (state is ContactFormError) {
               getIt<DialogService>().showErrorDialog(

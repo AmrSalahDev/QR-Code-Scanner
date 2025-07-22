@@ -2,11 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
+import 'package:qr_code_sacnner_app/core/routes/app_router.dart';
+import 'package:qr_code_sacnner_app/core/services/di/di.dart';
+import 'package:qr_code_sacnner_app/core/services/dialog_service.dart';
 import 'package:qr_code_sacnner_app/core/utils/app_utils.dart';
-import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
 import 'package:qr_code_sacnner_app/features/event/presentation/cubit/event_cubit.dart';
 import 'package:qr_code_sacnner_app/features/widgets/common_button.dart';
 import 'package:qr_code_sacnner_app/features/widgets/custom_app_bar.dart';
@@ -88,7 +91,7 @@ class EventScreen extends StatelessWidget {
         endController.text.trim().isEmpty ||
         locationController.text.trim().isEmpty ||
         descriptionController.text.trim().isEmpty) {
-      CustomDialogs.showWarningDialog(
+      getIt<DialogService>().showWarningDialog(
         context: context,
         title: AppStrings.warning,
         desc: AppStrings.pleaseFillAllTheFields,
@@ -104,10 +107,10 @@ class EventScreen extends StatelessWidget {
       'Location': locationController.text.trim(),
       'Description': descriptionController.text.trim(),
     };
-    CustomDialogs.showQRcodeDialog(
-      context,
-      jsonEncode(eventData),
-      AppStrings.event,
+
+    context.push(
+      AppRouter.showQrCode,
+      extra: {'qrData': jsonEncode(eventData)},
     );
   }
 }

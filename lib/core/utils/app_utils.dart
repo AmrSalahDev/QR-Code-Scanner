@@ -14,7 +14,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
-import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
+import 'package:qr_code_sacnner_app/core/services/di/di.dart';
+import 'package:qr_code_sacnner_app/core/services/dialog_service.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -117,7 +118,7 @@ class AppUtils {
       //   );
       // }
     } catch (e) {
-      CustomDialogs.showErrorDialog(
+      getIt<DialogService>().showErrorDialog(
         context: globalKey.currentContext!,
         title: 'Error',
         desc: 'Failed to share QR code.',
@@ -137,7 +138,7 @@ class AppUtils {
         quality: 100,
       );
       if (result['isSuccess'] == true) {
-        CustomDialogs.showSuccessDialog(
+        getIt<DialogService>().showSuccessDialog(
           context: globalKey.currentContext!,
           title: 'Success',
           desc: 'QR code saved successfully!',
@@ -145,7 +146,7 @@ class AppUtils {
           onTap: () {},
         );
       } else {
-        CustomDialogs.showErrorDialog(
+        getIt<DialogService>().showErrorDialog(
           context: globalKey.currentContext!,
           title: 'Failed to save QR code.',
           desc: 'Please give app permission to save QR code.',
@@ -158,7 +159,7 @@ class AppUtils {
         );
       }
     } catch (e) {
-      CustomDialogs.showErrorDialog(
+      getIt<DialogService>().showErrorDialog(
         context: globalKey.currentContext!,
         title: 'Oops!',
         desc: 'Failed to save QR code.',

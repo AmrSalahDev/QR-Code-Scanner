@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/extensions/context_extensions.dart';
-import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
+import 'package:qr_code_sacnner_app/core/routes/app_router.dart';
 import 'package:qr_code_sacnner_app/core/utils/screen_utils.dart';
 import 'package:qr_code_sacnner_app/features/generate/data/models/generate_model.dart';
 import 'package:qr_code_sacnner_app/features/generate/presentation/cubit/generate_cubit.dart';
@@ -21,7 +22,7 @@ class GenerateScreen extends StatelessWidget {
     return BlocListener<GenerateCubit, GenerateState>(
       listener: (context, state) {
         if (state is GenerateLoaded) {
-          CustomDialogs.showQRcodeDialog(context, state.data, state.type);
+          context.push(AppRouter.showQrCode, extra: {'qrData': state.data});
         }
       },
       child: Scaffold(

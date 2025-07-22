@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_icons.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/extensions/context_extensions.dart';
+import 'package:qr_code_sacnner_app/core/routes/app_router.dart';
 import 'package:qr_code_sacnner_app/core/services/di/di.dart';
 import 'package:qr_code_sacnner_app/core/services/dialog_service.dart';
 import 'package:qr_code_sacnner_app/features/business/domain/entities/business_entity.dart';
@@ -59,10 +61,9 @@ class _BusinessScreenState extends State<BusinessScreen> {
         child: BlocListener<BusinessCubit, BusinessState>(
           listener: (context, state) {
             if (state is BusinessFormSuccess) {
-              getIt<DialogService>().showQRcodeDialog(
-                context,
-                state.qrCode,
-                AppStrings.business,
+              context.push(
+                AppRouter.showQrCode,
+                extra: {'qrData': state.qrCode},
               );
             } else if (state is BusinessFormError) {
               getIt<DialogService>().showErrorDialog(

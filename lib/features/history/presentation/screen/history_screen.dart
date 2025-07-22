@@ -6,21 +6,29 @@ import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_icons.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/extensions/context_extensions.dart';
-import 'package:qr_code_sacnner_app/core/utils/app_utils.dart';
-import 'package:qr_code_sacnner_app/core/utils/barcode_utils.dart';
-import 'package:qr_code_sacnner_app/core/utils/custom_dialogs.dart';
-import 'package:qr_code_sacnner_app/features/history/data/models/history_model.dart';
+import 'package:qr_code_sacnner_app/core/routes/app_router.dart';
+import 'package:qr_code_sacnner_app/core/services/di/di.dart';
+import 'package:qr_code_sacnner_app/core/services/dialog_service.dart';
 import 'package:qr_code_sacnner_app/features/generate/presentation/cubit/generate_cubit.dart';
 import 'package:qr_code_sacnner_app/features/generate/presentation/screen/generate_screen.dart';
 import 'package:qr_code_sacnner_app/features/history/presentation/cubit/history_cubit.dart';
 
-class HistoryScreen extends StatelessWidget {
+class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    late List<HistoryModel> histories;
+  State<HistoryScreen> createState() => _HistoryScreenState();
+}
 
+class _HistoryScreenState extends State<HistoryScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<HistoryCubit>().loadHistories();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -36,34 +44,32 @@ class HistoryScreen extends StatelessWidget {
                     bloc: BlocProvider.of<HistoryCubit>(context),
                     listener: (context, state) {
                       if (state is HistoryDeleteFailure) {
-                        CustomDialogs.showErrorDialog(
+                        getIt<DialogService>().showErrorDialog(
                           context: context,
                           title: AppStrings.errorDeletingHistory,
                           desc: state.message,
                           btnLabel: AppStrings.tryAgain,
                           onTap: () {
-                            BlocProvider.of<HistoryCubit>(
-                              context,
-                            ).deleteHistory(state.id);
+                            context.read<HistoryCubit>().deleteHistory(
+                              state.id,
+                            );
                           },
                         );
                       } else if (state is HistoryFailure) {
-                        CustomDialogs.showErrorDialog(
+                        getIt<DialogService>().showErrorDialog(
                           context: context,
                           title: AppStrings.errorLoadingHistory,
                           desc: state.message,
                           btnLabel: AppStrings.tryAgain,
                           onTap: () {
-                            BlocProvider.of<HistoryCubit>(
-                              context,
-                            ).loadHistories();
+                            context.read<HistoryCubit>().loadHistories();
                           },
                         );
                       }
                     },
                     builder: (context, state) {
                       if (state is HistoryLoaded) {
-                        histories = state.histories;
+                        final histories = state.histories;
                         if (histories.isEmpty) {
                           return Center(
                             child: Column(
@@ -89,92 +95,65 @@ class HistoryScreen extends StatelessWidget {
                             ),
                           );
                         }
-                      }
-                      return ListView.builder(
-                        itemCount: histories.length,
-                        itemBuilder: (context, index) {
-                          String content = histories[index].content;
-                          return Card(
-                            elevation: 5,
-                            color: AppColor.primaryColor,
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
-                            ),
-                            child: ListTile(
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                              ),
 
-                              leading: Icon(
-                                BarcodeUtils.getQrCodeType(content) == 'URL'
-                                    ? Icons.link
-                                    : BarcodeUtils.getQrCodeType(content) ==
-                                          'Text'
-                                    ? Icons.text_fields
-                                    : BarcodeUtils.getQrCodeType(content) ==
-                                          'WiFi'
-                                    ? Icons.wifi
-                                    : BarcodeUtils.getQrCodeType(content) ==
-                                          'Email'
-                                    ? Icons.email
-                                    : BarcodeUtils.getQrCodeType(content) ==
-                                          'Phone'
-                                    ? Icons.phone
-                                    : BarcodeUtils.getQrCodeType(content) ==
-                                          'SMS'
-                                    ? Icons.sms
-                                    : BarcodeUtils.getQrCodeType(content) ==
-                                          'Geo Location'
-                                    ? Icons.location_on
-                                    : BarcodeUtils.getQrCodeType(content) ==
-                                          'vCard (Contact)'
-                                    ? Icons.contact_page
-                                    : Icons.qr_code,
-                                color: AppColor.secondaryColor,
-                                size: 35,
+                        return ListView.builder(
+                          itemCount: histories.length,
+                          itemBuilder: (context, index) {
+                            final item = histories[index];
+
+                            return Card(
+                              elevation: 5,
+                              color: AppColor.primaryColor,
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
                               ),
-                              title: Text(
-                                histories[index].title,
-                                style: TextStyle(color: Colors.white),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              subtitle: Text(
-                                histories[index].date.toLocal().toString(),
-                                style: TextStyle(color: Colors.white70),
-                              ),
-                              trailing: IconButton(
-                                onPressed: () async {
-                                  await BlocProvider.of<HistoryCubit>(
-                                    context,
-                                  ).deleteHistory(histories[index].id);
-                                },
-                                icon: Icon(
-                                  Icons.delete,
-                                  color: AppColor.secondaryColor,
+                              child: ListTile(
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
                                 ),
-                              ),
-                              onTap: () {
-                                if (BarcodeUtils.isWifiBarcode(content)) {
-                                  CustomDialogs.showWifiDialog(
-                                    context: context,
-                                    ssid: BarcodeUtils.getWifiSsid(content)!,
-                                    password: BarcodeUtils.getWifiPassword(
-                                      content,
-                                    )!,
-                                    onOkTap: () {
-                                      AppUtils.openWifiSettings();
-                                    },
-                                    onCancelTap: () {
-                                      context.pop();
+
+                                leading: Icon(
+                                  _mapIcon(item.type),
+                                  color: AppColor.secondaryColor,
+                                  size: 35,
+                                ),
+                                title: Text(
+                                  histories[index].title,
+                                  style: TextStyle(color: Colors.white),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                subtitle: Text(
+                                  item.formattedDate,
+                                  style: TextStyle(color: Colors.white70),
+                                ),
+                                trailing: IconButton(
+                                  onPressed: () async {
+                                    await context
+                                        .read<HistoryCubit>()
+                                        .deleteHistory(histories[index].id);
+                                  },
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: AppColor.secondaryColor,
+                                  ),
+                                ),
+                                onTap: () {
+                                  context.push(
+                                    AppRouter.showQrData,
+                                    extra: {
+                                      'data': item.content,
+                                      'type': item.type,
                                     },
                                   );
-                                }
-                              },
-                            ),
-                          );
-                        },
-                      );
+                                },
+                              ),
+                            );
+                          },
+                        );
+                      }
+                      return const SizedBox.shrink();
                     },
                   ),
                 ),
@@ -196,11 +175,34 @@ class HistoryScreen extends StatelessWidget {
   }
 }
 
+IconData _mapIcon(String type) {
+  switch (type) {
+    case 'URL':
+      return Icons.link;
+    case 'Text':
+      return Icons.text_fields;
+    case 'WiFi':
+      return Icons.wifi;
+    case 'Email':
+      return Icons.email;
+    case 'Phone':
+      return Icons.phone;
+    case 'SMS':
+      return Icons.sms;
+    case 'Location':
+      return Icons.location_on;
+    case 'Contact':
+      return Icons.contact_page;
+    default:
+      return Icons.qr_code;
+  }
+}
+
 class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 
-  _CustomAppBar({super.key}) : preferredSize = Size.fromHeight(135);
+  _CustomAppBar() : preferredSize = Size.fromHeight(135);
 
   @override
   Widget build(BuildContext context) {
@@ -227,9 +229,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           child: IconButton(
             icon: Icon(Icons.menu, color: AppColor.secondaryColor),
-            onPressed: () {
-              // Add your delete action here
-            },
+            onPressed: () {},
           ),
         ),
       ],
