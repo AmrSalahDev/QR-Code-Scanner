@@ -7,6 +7,7 @@ import 'package:qr_code_sacnner_app/core/constant/app_icons.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/extensions/context_extensions.dart';
 import 'package:qr_code_sacnner_app/core/routes/app_router.dart';
+import 'package:qr_code_sacnner_app/core/routes/args/show_qr_code_args.dart';
 import 'package:qr_code_sacnner_app/core/services/di/di.dart';
 import 'package:qr_code_sacnner_app/core/services/dialog_service.dart';
 import 'package:qr_code_sacnner_app/features/contact/domain/entities/contact_entity.dart';
@@ -69,7 +70,7 @@ class _ContactScreenState extends State<ContactScreen> {
             if (state is ContactFormSuccess) {
               context.push(
                 AppRouter.showQrCode,
-                extra: {'qrData': state.qrCode},
+                extra: ShowQrCodeArgs(qrData: state.qrCode),
               );
             } else if (state is ContactFormError) {
               getIt<DialogService>().showErrorDialog(

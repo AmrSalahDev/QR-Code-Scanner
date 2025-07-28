@@ -133,4 +133,12 @@ class AppStrings {
   static const String copyWifiName = 'Copy WI-FI Name';
   static const String pickLocation = 'Pick Location';
   static const String qrCode = 'QR Code';
+  static const String noInternetConnection = 'No internet connection';
+  static const String backOnline = 'Back online';
+  static const String setLocation = 'set Location';
+  static const String invalidLocation = 'Invalid Location';
+  static const String latitude = 'Latitude';
+  static const String longitude = 'Longitude';
+  static const String latitudeHint = 'Ex: 30.033333';
+  static const String longitudeHint = 'Ex: 31.233334';
 }

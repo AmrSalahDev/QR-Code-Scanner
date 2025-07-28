@@ -6,6 +6,8 @@ extension MediaQueryValues on BuildContext {
   double get screenHeight => screenSize.height;
   double get topPadding => MediaQuery.of(this).padding.top;
   double get bottomPadding => MediaQuery.of(this).padding.bottom;
+  bool get isLandscape =>
+      MediaQuery.of(this).orientation == Orientation.landscape;
   TextScaler get textScaler => MediaQuery.textScalerOf(this);
 }
 

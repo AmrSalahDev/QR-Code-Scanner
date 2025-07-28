@@ -8,6 +8,7 @@ part 'history_state.dart';
 class HistoryCubit extends Cubit<HistoryState> {
   final GetHistoriesUseCase getHistoriesUseCase;
   final DeleteHistoryUseCase deleteHistoryUseCase;
+
   HistoryCubit(this.getHistoriesUseCase, this.deleteHistoryUseCase)
     : super(HistoryInitial());
 

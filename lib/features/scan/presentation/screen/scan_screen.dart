@@ -10,7 +10,7 @@ import 'package:qr_code_sacnner_app/core/services/di/di.dart';
 import 'package:qr_code_sacnner_app/core/services/dialog_service.dart';
 import 'package:qr_code_sacnner_app/core/utils/app_utils.dart';
 import 'package:qr_code_sacnner_app/features/scan/presentation/cubit/scan_cubit.dart';
-import 'package:qr_code_sacnner_app/features/scan/presentation/screen/scan_ui_actions.dart';
+import 'package:qr_code_sacnner_app/features/scan/presentation/action/scan_ui_actions.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 class ScanScreen extends StatefulWidget {

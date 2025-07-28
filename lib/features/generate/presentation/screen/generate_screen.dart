@@ -6,6 +6,7 @@ import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/extensions/context_extensions.dart';
 import 'package:qr_code_sacnner_app/core/routes/app_router.dart';
+import 'package:qr_code_sacnner_app/core/routes/args/show_qr_code_args.dart';
 import 'package:qr_code_sacnner_app/core/utils/screen_utils.dart';
 import 'package:qr_code_sacnner_app/features/generate/data/models/generate_model.dart';
 import 'package:qr_code_sacnner_app/features/generate/presentation/cubit/generate_cubit.dart';
@@ -22,7 +23,10 @@ class GenerateScreen extends StatelessWidget {
     return BlocListener<GenerateCubit, GenerateState>(
       listener: (context, state) {
         if (state is GenerateLoaded) {
-          context.push(AppRouter.showQrCode, extra: {'qrData': state.data});
+          context.push(
+            AppRouter.showQrCode,
+            extra: ShowQrCodeArgs(qrData: state.data),
+          );
         }
       },
       child: Scaffold(

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/routes/app_router.dart';
+import 'package:qr_code_sacnner_app/core/routes/args/show_qr_data_args.dart';
 import 'package:qr_code_sacnner_app/core/services/di/di.dart';
 import 'package:qr_code_sacnner_app/core/services/dialog_service.dart';
 import 'package:qr_code_sacnner_app/features/scan/presentation/cubit/scan_cubit.dart';
@@ -13,7 +14,7 @@ class ScanUiActions {
   static void onScanSuccess(
     BuildContext context,
     QRViewController? controller,
-    String? data,
+    String data,
     String type,
   ) async {
     await controller?.pauseCamera();
@@ -26,7 +27,7 @@ class ScanUiActions {
       btnLabel: AppStrings.view,
       onTap: () => context.push(
         AppRouter.showQrData,
-        extra: {'data': data, 'type': type},
+        extra: ShowQrDataArgs(qrData: data, qrType: type),
       ),
       onDismissCallback: (dismiss) async {
         await controller?.resumeCamera();
@@ -48,7 +49,7 @@ class ScanUiActions {
       btnLabel: AppStrings.view,
       onTap: () => context.push(
         AppRouter.showQrData,
-        extra: {'data': data, 'type': type},
+        extra: ShowQrDataArgs(qrData: data, qrType: type),
       ),
       cancelLabel: AppStrings.ok,
       onCancel: () => {},

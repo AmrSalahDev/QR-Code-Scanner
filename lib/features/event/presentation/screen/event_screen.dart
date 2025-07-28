@@ -7,6 +7,7 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'package:qr_code_sacnner_app/core/color/app_color.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
 import 'package:qr_code_sacnner_app/core/routes/app_router.dart';
+import 'package:qr_code_sacnner_app/core/routes/args/show_qr_code_args.dart';
 import 'package:qr_code_sacnner_app/core/services/di/di.dart';
 import 'package:qr_code_sacnner_app/core/services/dialog_service.dart';
 import 'package:qr_code_sacnner_app/core/utils/app_utils.dart';
@@ -110,7 +111,7 @@ class EventScreen extends StatelessWidget {
 
     context.push(
       AppRouter.showQrCode,
-      extra: {'qrData': jsonEncode(eventData)},
+      extra: ShowQrCodeArgs(qrData: jsonEncode(eventData)),
     );
   }
 }

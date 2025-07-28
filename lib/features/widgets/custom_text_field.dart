@@ -10,6 +10,7 @@ class CustomTextField extends StatelessWidget {
   final bool supportSuffix;
   final VoidCallback? onSuffixTap;
   final TextEditingController controller;
+  final TextInputType? textInputType;
   const CustomTextField({
     super.key,
     required this.label,
@@ -19,6 +20,7 @@ class CustomTextField extends StatelessWidget {
     required this.controller,
     this.onSuffixTap,
     this.suffixIcon,
+    this.textInputType,
   });
 
   @override
@@ -31,6 +33,7 @@ class CustomTextField extends StatelessWidget {
         TextField(
           style: TextStyle(color: AppColor.secondaryColor),
           cursorColor: AppColor.secondaryColor,
+          keyboardType: textInputType,
           maxLines: maxLines ?? 1,
           controller: controller,
           decoration: InputDecoration(

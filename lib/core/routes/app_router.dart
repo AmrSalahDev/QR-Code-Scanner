@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qr_code_sacnner_app/core/routes/args/show_qr_code_args.dart';
+import 'package:qr_code_sacnner_app/core/routes/args/show_qr_data_args.dart';
 import 'package:qr_code_sacnner_app/core/services/di/di.dart';
 import 'package:qr_code_sacnner_app/features/business/domain/usecases/generate_business_qr_usecase.dart';
 import 'package:qr_code_sacnner_app/features/business/domain/usecases/validate_business_inputs_usecase.dart';
@@ -18,13 +20,14 @@ import 'package:qr_code_sacnner_app/features/history/domain/usecases/delete_hist
 import 'package:qr_code_sacnner_app/features/history/domain/usecases/get_histories_usecase.dart';
 import 'package:qr_code_sacnner_app/features/history/presentation/cubit/history_cubit.dart';
 import 'package:qr_code_sacnner_app/features/history/presentation/screen/history_screen.dart';
+import 'package:qr_code_sacnner_app/global/cubits/connection_cubit.dart';
 import 'package:qr_code_sacnner_app/features/location/presentation/screens/location_screen.dart';
 import 'package:qr_code_sacnner_app/features/router/home_shell.dart';
 import 'package:qr_code_sacnner_app/features/scan/presentation/cubit/scan_cubit.dart';
 import 'package:qr_code_sacnner_app/features/scan/presentation/screen/scan_screen.dart';
 import 'package:qr_code_sacnner_app/features/show_qr_code/presentation/screens/show_qr_code_screen.dart';
-import 'package:qr_code_sacnner_app/features/view_qr_data/presentation/cubit/view_qr_data_cubit.dart';
-import 'package:qr_code_sacnner_app/features/view_qr_data/presentation/screens/show_qr_data_screen.dart';
+import 'package:qr_code_sacnner_app/features/show_qr_data/presentation/cubit/view_qr_data_cubit.dart';
+import 'package:qr_code_sacnner_app/features/show_qr_data/presentation/screens/show_qr_data_screen.dart';
 
 class AppRouter {
   static const String generate = '/generate';
@@ -99,15 +102,21 @@ final GoRouter appRouter = GoRouter(
 
     GoRoute(
       path: AppRouter.location,
-      builder: (context, state) => LocationScreen(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => ConnectionCubit(),
+        child: LocationScreen(),
+      ),
     ),
 
     GoRoute(
       path: AppRouter.showQrCode,
       builder: (context, state) {
-        final args = state.extra as Map<String, String>;
-        final qrData = args['qrData'] ?? '';
-        return ShowQrCodeScreen(qrData: qrData);
+        final args = state.extra as ShowQrCodeArgs;
+        return ShowQrCodeScreen(
+          qrData: args.qrData,
+          qrType: args.qrType,
+          qrCodeBeforeFormatting: args.qrDataBeforeFormatting,
+        );
       },
     ),
 
@@ -124,12 +133,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRouter.showQrData,
       builder: (context, state) {
-        final args = state.extra as Map<String, dynamic>;
-        final data = args['data'] as String;
-        final type = args['type'] as String;
+        final args = state.extra as ShowQrDataArgs;
         return BlocProvider(
           create: (context) => ViewQrDataCubit(),
-          child: ShowQrDataScreen(data: data, type: type),
+          child: ShowQrDataScreen(data: args.qrData, type: args.qrType),
         );
       },
     ),

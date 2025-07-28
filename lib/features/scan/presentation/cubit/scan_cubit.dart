@@ -6,7 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_constant.dart';
 import 'package:qr_code_sacnner_app/core/constant/app_strings.dart';
-import 'package:qr_code_sacnner_app/core/utils/barcode_utils.dart';
+import 'package:qr_code_sacnner_app/core/utils/qr_code_utils.dart';
 import 'package:qr_code_sacnner_app/features/history/data/models/history_model.dart';
 import 'package:uuid/uuid.dart';
 

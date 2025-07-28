@@ -1,6 +1,6 @@
 // presentation/dtos/history_view_data.dart
 import 'package:qr_code_sacnner_app/core/utils/app_utils.dart';
-import 'package:qr_code_sacnner_app/core/utils/barcode_utils.dart';
+import 'package:qr_code_sacnner_app/core/utils/qr_code_utils.dart';
 import 'package:qr_code_sacnner_app/features/history/domain/entities/history_entity.dart';
 
 class HistoryViewData {
